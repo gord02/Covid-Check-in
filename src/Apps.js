@@ -47,6 +47,7 @@ class Apps extends Component {
         return (
             <React.Fragment>
                 <Navbar authenticated={this.state.authenticated} />
+                {/* Needs to be here so that state an ca be updated */}
                 <Router>
                     <Route exact path="/logout" component={Logout} />
                 </Router>

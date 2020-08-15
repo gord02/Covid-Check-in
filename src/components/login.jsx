@@ -12,7 +12,7 @@ class Login extends Component {
     this.authWithGoogle = this.authWithGoogle.bind(this)
     this.authEmailPassword = this.authEmailPassword.bind(this)
     this.state = {
-      redirect: false
+      redirect: false,
     }
   }
 
@@ -32,10 +32,46 @@ class Login extends Component {
   authEmailPassword(event) {
     event.preventDefault()
     console.log("authed with email")
-    console.table([{
-      email: this.emailInput.value,
-      password: this.passwordInput.value
-    }])
+    const email = this.emailInput.value
+    const password = this.passwordInput.value
+    console.log(email);
+
+    // this will check if anyone has the email 
+    app.auth().fetchSignInMethodsForEmail(email)
+      .then((providers) => {
+        // determines if person doesn't have an account
+        if (providers.length === 0) {
+          // create user
+          return app.auth().createUserWithEmailAndPassword(email, password)
+        }
+        else if (providers.indexOf("password") === -1) {
+          // they used google 
+          this.loginForm.reset()
+          alert("Try an alternative login");
+        }
+        else {
+          // sign user in
+          console.log("user signed in")
+          return app.auth().signInWithEmailAndPassword(email, password);
+
+        }
+      })
+      .then((user) => {
+        if (user && user.email) {
+          this.loginForm.reset();
+          this.setState({ redirect: true })
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+        alert(error);
+      })
+
+
+    // console.table([{
+    //   email: this.emailInput.value,
+    //   password: this.passwordInput.value
+    // }])
   }
 
   render() {
@@ -45,7 +81,7 @@ class Login extends Component {
     return (
       <React.Fragment>
         {/* { */}
-        <div>
+        <div style={{ justifyContent: "center" }}>
           <button onClick={() => { this.authWithGoogle() }} > Log in with Google</button>
         </div>
 

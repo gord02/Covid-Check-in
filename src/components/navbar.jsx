@@ -5,7 +5,7 @@ class Navbar extends Component {
   render() {
     return (
       <Router>
-        <nav className="navbar navbar-expand-lg navbar-light bg-light">
+        <nav className="navbar navbar-expand-lg navbar-light bg-light navbar-right">
           <Link to="/" className="navbar-brand"> Home</Link>
 
           <button
@@ -21,7 +21,7 @@ class Navbar extends Component {
           </button>
 
           <div className="collapse navbar-collapse" id="navbarNav">
-            <ul className="navbar-nav">
+            <ul className="navbar-nav navbar-right">
               <Link to="/" className="nav-link">
                 <li>Home</li>
               </Link>
@@ -39,7 +39,8 @@ class Navbar extends Component {
 
                       <Link to="/search" className="nav-link"><li id="nav">Search</li></Link>
 
-                      <Link to="/logout" className="nav-link"><li id="nav">Logout</li></Link>
+                      <Link to="/logout" className="nav-link"><li id="nav" aria-label="log out">Logout</li></Link>
+                      {/* <button>{this.props.emailInput.value} </button> */}
                     </Router>
                   </React.Fragment>
 
