@@ -7,6 +7,11 @@ import Search from "./components/search";
 import Apps from "./Apps"
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
+import Navbar from "./components/navbar";
+import { app } from "./firebase";
+import { BrowserRouter as Router, Route } from 'react-router-dom';
+import Logout from './components/logout';
+
 function App() {
 
   return (
