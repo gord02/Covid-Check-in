@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-
 import { Redirect } from "react-router-dom";
 import { app, googleProvider } from "../firebase";
 
@@ -42,17 +41,23 @@ class Login extends Component {
         // determines if person doesn't have an account
         if (providers.length === 0) {
           // create user
-          return app.auth().createUserWithEmailAndPassword(email, password)
+          // return (
+          app.auth().createUserWithEmailAndPassword(email, password);
+          this.props.history.push('/')
+          return <Redirect to="/" />
+          // )
         }
         else if (providers.indexOf("password") === -1) {
           // they used google 
           this.loginForm.reset()
-          alert("Try an alternative login");
+          alert("Try an alternative login, such as Google");
         }
         else {
           // sign user in
           console.log("user signed in")
-          return app.auth().signInWithEmailAndPassword(email, password);
+          app.auth().signInWithEmailAndPassword(email, password);
+          this.props.history.push('/')
+          return <Redirect to="/" />
 
         }
       })
@@ -80,11 +85,9 @@ class Login extends Component {
     }
     return (
       <React.Fragment>
-        {/* { */}
         <div style={{ justifyContent: "center" }}>
           <button onClick={() => { this.authWithGoogle() }} > Log in with Google</button>
         </div>
-
 
         <form onSubmit={(event) => { this.authEmailPassword(event) }} ref={(form) => { this.loginForm = form }} >
           <div className="form-group">
@@ -98,7 +101,6 @@ class Login extends Component {
           <button type="submit" className="btn btn-primary">Submit</button>
         </form>
 
-        {/* <MyForm /> */}
       </React.Fragment>
     );
   }

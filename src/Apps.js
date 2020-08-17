@@ -18,7 +18,7 @@ class Apps extends Component {
         super();
         this.state = {
             authenticated: false,
-            loading: true
+            loading: true,
         };
     };
 
@@ -42,12 +42,11 @@ class Apps extends Component {
         this.removeAuthListener();
     }
 
-
     render() {
         // it takes time in-between getting user authentication therefore something is loaded in its place
         if (this.state.loading === true) {
             return (
-                <div style={{ height: "100%" }}>
+                <div style={{ height: "100%", marginTop: "15%" }}>
                     <h1 style={{ textAlign: "center" }}>One moment...</h1>
                 </div>
             )
@@ -57,21 +56,18 @@ class Apps extends Component {
                 {/* <Navbar /> */}
                 <Navbar authenticated={this.state.authenticated} />
                 {/* Needs to be here so that state an ca be updated */}
-                <Router>
-                    <Route exact path="/logout" component={Logout} />
-                </Router>
+
 
                 {/* Switch is used to prevent multiple components from running at once when using routing */}
                 <Switch>
                     {/* exact is used to define an absolute route, so only urls contain nothing or the slash will cause this page to render */}
-                    <Route path="/" exact component={Home} />
+                    <Route exact path="/" component={Home} />
 
                     {/* this only renders the login component when the url typed in is login */}
                     <Route path="/login" component={Login} />
                     <Route path="/checkin" component={CheckIn} />
                     <Route path="/search" component={Search} />
-                    <Route path="logout" component={Logout} />
-                    {/* <Route path="/form" component={MyForm} /> */}
+                    <Route exact path="/logout" component={Logout} />
                 </Switch>
             </Router>
         );
