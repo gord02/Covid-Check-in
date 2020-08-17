@@ -5,13 +5,13 @@ import { app } from "./firebase";
 // import Logout from './components/logout';
 
 import Login from "./components/login";
+import SignUp from "./components/signup";
 import Logout from "./components/logout";
 import Home from "./components/home";
 import CheckIn from "./components/checkin";
 import Search from "./components/search";
 // import Apps from "./Apps"
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-
 
 class Apps extends Component {
     constructor() {
@@ -65,6 +65,7 @@ class Apps extends Component {
 
                     {/* this only renders the login component when the url typed in is login */}
                     <Route path="/login" component={Login} />
+                    <Route path="/signup" component={SignUp} />
                     <Route path="/checkin" component={CheckIn} />
                     <Route path="/search" component={Search} />
                     <Route exact path="/logout" component={Logout} />
