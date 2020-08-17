@@ -6,10 +6,12 @@ class Navbar extends Component {
 
     return (
       <React.Fragment>
-        <nav className="navbar navbar-expand-lg navbar-light bg-light navbar-right">
+        <nav className="navbar navbar-expand-lg navbar navbar-dark bg-dark justify-content-between">
           <Link to="/" className="navbar-brand"> Covid Check-In</Link>
           <div className="collapse navbar-collapse navbar-right" id="navbarNav">
-            <ul className="nav navbar-nav navbar-right">
+            <ul className="nav navbar-nav mr-auto">
+            </ul>
+            <ul className="nav navbar-nav">
               <Link to="/" className="nav-link"><li>Home</li></Link>
 
               {/* {this.props.authenticated ? (style={{display: "none"}}): null} */}
@@ -31,7 +33,7 @@ class Navbar extends Component {
 
                     <Link to="/checkin" className="nav-link"><li>CheckIn</li></Link>
                     <Link to="/search" className="nav-link"><li>Search</li></Link>
-                    <Link to="/logout" className="nav-link">Logout</Link>
+                    <Link to="/logout" className="nav-link ">Logout</Link>
                     {/* <button>{this.props.emailInput.value} </button> */}
 
                   </React.Fragment>
@@ -39,6 +41,7 @@ class Navbar extends Component {
                 : null
               }
             </ul>
+
           </div>
         </nav>
       </React.Fragment>

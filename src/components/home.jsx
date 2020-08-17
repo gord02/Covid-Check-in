@@ -8,6 +8,9 @@ function Home() {
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
       </header>
+      <p>Welcome to the Covid checkin Website!</p>
+
+      <h3>Information Section</h3>
     </div>
   );
 }
