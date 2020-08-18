@@ -1,38 +1,38 @@
 import React, { Component } from "react";
 import { Redirect } from "react-router-dom";
-import { app, googleProvider } from "../firebase";
+import { app, googleProvider } from "../../firebase";
 
 import "firebase/auth";
 
 class Login extends Component {
 
   constructor(props) {
-    super(props)
-    this.authWithGoogle = this.authWithGoogle.bind(this)
-    this.authEmailPassword = this.authEmailPassword.bind(this)
+    super(props);
+    this.authWithGoogle = this.authWithGoogle.bind(this);
+    this.authEmailPassword = this.authEmailPassword.bind(this);
     this.state = {
       redirect: false,
     }
   }
 
   authWithGoogle() {
-    console.log("authed with google")
+    console.log("authed with google");
     app.auth().signInWithPopup(googleProvider)
       .then((result, error) => {
         if (error) {
-          console.log(error)
+          console.log(error);
         }
         else {
-          this.setState({ redirect: true })
+          this.setState({ redirect: true });
         }
       })
   }
 
   authEmailPassword(event) {
-    event.preventDefault()
-    console.log("authed with email")
-    const email = this.emailInput.value
-    const password = this.passwordInput.value
+    event.preventDefault();
+    console.log("authed with email");
+    const email = this.emailInput.value;
+    const password = this.passwordInput.value;
     console.log(email);
 
     // this will check if anyone has the email 
@@ -41,30 +41,28 @@ class Login extends Component {
         // determines if person doesn't have an account
         if (providers.length === 0) {
           // create user
-          // return (
           app.auth().createUserWithEmailAndPassword(email, password);
-          this.props.history.push('/')
-          return <Redirect to="/" />
-          // )
+          this.props.history.push('/');
+          return (<Redirect to="/" />);
         }
         else if (providers.indexOf("password") === -1) {
           // they used google 
-          this.loginForm.reset()
+          this.loginForm.reset();
           alert("Try an alternative login, such as Google");
         }
         else {
           // sign user in
-          console.log("user signed in")
+          console.log("user signed in");
           app.auth().signInWithEmailAndPassword(email, password);
-          this.props.history.push('/')
-          return <Redirect to="/" />
+          this.props.history.push('/');
+          return (<Redirect to="/" />);
 
         }
       })
       .then((user) => {
         if (user && user.email) {
           this.loginForm.reset();
-          this.setState({ redirect: true })
+          this.setState({ redirect: true });
         }
       })
       .catch((error) => {
@@ -72,7 +70,7 @@ class Login extends Component {
         alert(error);
       })
 
-
+    // Un comment to aid in debugging
     // console.table([{
     //   email: this.emailInput.value,
     //   password: this.passwordInput.value
@@ -80,16 +78,17 @@ class Login extends Component {
   }
 
   render() {
-    if (this.state.redirect === true) {
-      return <Redirect to='/' />
+    if (this.state.redirect) {
+      return (<Redirect to='/' />);
     }
     return (
-      <React.Fragment>
-        <div style={{ justifyContent: "center" }}>
-          <button onClick={() => { this.authWithGoogle() }} > Log in with Google</button>
+      <div className="loginPage">
+        <h1>Login</h1>
+        <div className="googleLogin">
+          <button className="btn btn-success" onClick={() => { this.authWithGoogle() }} > Log in with Google</button>
         </div>
 
-        <form onSubmit={(event) => { this.authEmailPassword(event) }} ref={(form) => { this.loginForm = form }} >
+        <form className="ui form" onSubmit={(event) => { this.authEmailPassword(event) }} ref={(form) => { this.loginForm = form }} >
           <div className="form-group">
             <label htmlFor="exampleInputEmail1">Email address</label>
             <input type="email" name="email" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email" ref={(input) => { this.emailInput = input }}></input>
@@ -101,7 +100,7 @@ class Login extends Component {
           <button type="submit" className="btn btn-primary">Submit</button>
         </form>
 
-      </React.Fragment>
+      </div>
     );
   }
 }

@@ -1,16 +1,14 @@
 import React, { Component } from 'react'
-import Navbar from "./components/navbar";
+import Navbar from "./components/Navbar/navbar";
 import { app } from "./firebase";
-// import { BrowserRouter as Router, Route } from 'react-router-dom';
-// import Logout from './components/logout';
-
-import Login from "./components/login";
-import SignUp from "./components/signup";
-import Logout from "./components/logout";
+import Login from "./components/Register/login";
+import SignUp from "./components/Register/signup";
+import Logout from "./components/Register/logout";
 import Home from "./components/home";
 import CheckIn from "./components/checkin";
 import Search from "./components/search";
-// import Apps from "./Apps"
+// import Map from "./components/map";
+import "./components/Styles/loadingStyles.css"
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 class Apps extends Component {
@@ -28,13 +26,13 @@ class Apps extends Component {
                 this.setState({
                     authenticated: true,
                     loading: false
-                })
+                });
             }
             else {
                 this.setState({
                     authenticated: false,
                     loading: false
-                })
+                });
             }
         })
     }
@@ -46,17 +44,13 @@ class Apps extends Component {
         // it takes time in-between getting user authentication therefore something is loaded in its place
         if (this.state.loading === true) {
             return (
-                <div style={{ height: "100%", marginTop: "15%" }}>
-                    <h1 style={{ textAlign: "center" }}>One moment...</h1>
-                </div>
-            )
+                <div class="loading">Loading&#8230;</div>
+            );
         }
         return (
             <Router>
-                {/* <Navbar /> */}
-                <Navbar authenticated={this.state.authenticated} />
+                <Navbar sticky="top" authenticated={this.state.authenticated} />
                 {/* Needs to be here so that state an ca be updated */}
-
 
                 {/* Switch is used to prevent multiple components from running at once when using routing */}
                 <Switch>
@@ -69,6 +63,7 @@ class Apps extends Component {
                     <Route path="/checkin" component={CheckIn} />
                     <Route path="/search" component={Search} />
                     <Route exact path="/logout" component={Logout} />
+                    {/* <Route path="/search/maps" component={Map} /> */}
                 </Switch>
             </Router>
         );

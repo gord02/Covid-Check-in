@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { Redirect } from "react-router-dom";
-import { app } from "../firebase.js"
+import { app } from "../../firebase"
 
 class Logout extends Component {
     constructor() {
-        super()
+        super();
         this.state = {
             redirect: false
         }
@@ -12,14 +12,14 @@ class Logout extends Component {
 
     componentWillMount() {
         app.auth().signOut().then((user) => {
-            this.setState({ redirect: true })
-        })
+            this.setState({ redirect: true });
+        });
     }
 
     render() {
         if (this.state.redirect === true) {
             console.log("here");
-            return (<Redirect to="/" />)
+            return (<Redirect to="/" />);
 
         }
         return (

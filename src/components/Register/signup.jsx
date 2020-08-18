@@ -1,24 +1,24 @@
 import React, { Component } from "react";
 import { Redirect } from "react-router-dom";
-import { app, googleProvider } from "../firebase";
+import { app } from "../../firebase";
 
 import "firebase/auth";
 
 class SignUp extends Component {
 
     constructor(props) {
-        super(props)
-        this.authEmailPassword = this.authEmailPassword.bind(this)
+        super(props);
+        this.authEmailPassword = this.authEmailPassword.bind(this);
         this.state = {
             redirect: false,
         }
     }
 
     authEmailPassword(event) {
-        event.preventDefault()
-        console.log("authed with email")
-        const email = this.emailInput.value
-        const password = this.passwordInput.value
+        event.preventDefault();
+        console.log("authed with email");
+        const email = this.emailInput.value;
+        const password = this.passwordInput.value;
         console.log(email);
 
         // this will check if anyone has the email 
@@ -27,15 +27,13 @@ class SignUp extends Component {
                 // determines if person doesn't have an account
                 if (providers.length === 0) {
                     // create user
-                    // return (
                     app.auth().createUserWithEmailAndPassword(email, password);
-                    this.props.history.push('/')
-                    return <Redirect to="/" />
-                    // )
+                    this.props.history.push('/');
+                    return (<Redirect to="/" />);
                 }
                 else if (providers.indexOf("password") === -1) {
                     // they used google 
-                    this.loginForm.reset()
+                    this.loginForm.reset();
                     alert("Email already In use");
                 } else {
                     alert("failed to create user, try again later");
@@ -45,7 +43,7 @@ class SignUp extends Component {
             .then((user) => {
                 if (user && user.email) {
                     this.loginForm.reset();
-                    this.setState({ redirect: true })
+                    this.setState({ redirect: true });
                 }
             })
             .catch((error) => {
@@ -54,11 +52,12 @@ class SignUp extends Component {
             })
     }
     render() {
-        if (this.state.redirect === true) {
-            return <Redirect to='/' />
+        if (this.state.redirect) {
+            return (<Redirect to='/' />);
         }
         return (
-            <React.Fragment>
+            <div className="loginPage">
+                <h1>SignUp</h1>
                 <form onSubmit={(event) => { this.authEmailPassword(event) }} ref={(form) => { this.loginForm = form }} >
                     <div className="form-group">
                         <label htmlFor="exampleInputEmail1">Email address</label>
@@ -70,8 +69,7 @@ class SignUp extends Component {
                     </div>
                     <button type="submit" className="btn btn-primary">Create User</button>
                 </form>
-
-            </React.Fragment>
+            </div>
         );
     }
 }
