@@ -43,6 +43,7 @@
     height: 200px;
     box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
     border-radius: 30px;
+    padding-top: 8%;
 }
 /* html{
     background-color: #ED213A;
@@ -65,4 +66,20 @@
 
 #nav{
     position: fixed;
+}
+
+#search{
+    width: 80%;
+    display: inline;
+    margin-left: 6%;
+    margin-top: 10%;
+
+}
+#map {
+    width: 400px;
+    height:80%;
+    margin: auto;
+}
+#remove {
+    margin-bottom: 0;
 }

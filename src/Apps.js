@@ -10,6 +10,9 @@ import Search from "./components/search";
 // import Map from "./components/map";
 import "./components/Styles/loadingStyles.css"
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import SearchStore from './components/Search/searchStore';
+import Filter from './components/Search/filter';
+import Map from './components/Search/map';
 
 class Apps extends Component {
     constructor() {
@@ -44,12 +47,12 @@ class Apps extends Component {
         // it takes time in-between getting user authentication therefore something is loaded in its place
         if (this.state.loading === true) {
             return (
-                <div class="loading">Loading&#8230;</div>
+                <div className="loading">Loading&#8230;</div>
             );
         }
         return (
             <Router>
-                <Navbar sticky="top" authenticated={this.state.authenticated} />
+                <Navbar authenticated={this.state.authenticated} />
                 {/* Needs to be here so that state an ca be updated */}
 
                 {/* Switch is used to prevent multiple components from running at once when using routing */}
@@ -61,8 +64,14 @@ class Apps extends Component {
                     <Route path="/login" component={Login} />
                     <Route path="/signup" component={SignUp} />
                     <Route path="/checkin" component={CheckIn} />
-                    <Route path="/search" component={Search} />
                     <Route exact path="/logout" component={Logout} />
+
+                    <Route exact path="/search/map" component={Map} />
+                    <Route exact path="/search/filter" component={Filter} />
+                    <Route exact path="/search/searchstore" component={SearchStore} />
+                    <Route path="/search" component={Search} />
+
+
                     {/* <Route path="/search/maps" component={Map} /> */}
                 </Switch>
             </Router>
