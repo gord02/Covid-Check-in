@@ -52,6 +52,7 @@ class Apps extends Component {
         }
         return (
             <Router>
+                {/* <p>My Token = {window.token}</p> */}
                 <Navbar authenticated={this.state.authenticated} />
                 {/* Needs to be here so that state an ca be updated */}
 
