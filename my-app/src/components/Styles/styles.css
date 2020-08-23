@@ -69,10 +69,10 @@
 }
 
 #search{
-    width: 80%;
+    /* width: 80%; */
     display: inline;
     margin-left: 6%;
-    margin-top: 10%;
+    /* margin-top: 10%; */
 
 }
 #map {
