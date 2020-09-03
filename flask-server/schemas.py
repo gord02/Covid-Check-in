@@ -1,6 +1,7 @@
 from mongoengine import StringField, IntField, ListField, Document, connect, EmbeddedDocument, EmbeddedDocumentField, DateTimeField, FloatField
 
-connect('tumblelog')
+# connect('tumblelog')
+connect('cc')
 
 
 class Checkin(EmbeddedDocument):
@@ -18,8 +19,26 @@ class User(Document):
 
 
 class Store(Document):
-    lat = FloatField(required=True)
-    lng = FloatField(required=True)
     name = StringField(max_length=50)
+    lng = FloatField(required=True, max_length=10)
+    lat = FloatField(required=True, max_length=10)
     # total number of people checkedin incremetd by statsd
-    total = IntField(required=True)
+    # total = IntField(required=True)
+
+
+def createNewStore(storeName, storeLng, storeLat):
+    # store = Store(name="Tim Hortons")
+    # store.lat = 44.44
+    # store.lng = 44.44
+    # store.save()
+    store = Store(name=storeName)
+    store.lng = storeLng
+    store.lat = storeLat
+    store.save()
+
+
+# store = Store(name="Freshco")
+# store.lat = 33.33
+# store.lng = 33.33
+# store.save()
+# createNewStore(storeName, storeLng, storeLat)
