@@ -2,7 +2,7 @@
 
 Unpack webpack
 
-Use this command when updates to front end are made so the changes can be reflected in the backend
+Use this command when updates to front end are made so the changes can be reflected in the backend. Use this command in the root folder of frontend.
 ```
 npm run build
 ```
