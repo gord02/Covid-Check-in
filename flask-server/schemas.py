@@ -1,3 +1,4 @@
+import mongoengine
 from mongoengine import StringField, IntField, ListField, Document, connect, EmbeddedDocument, EmbeddedDocumentField, DateTimeField, FloatField
 
 # connect('tumblelog')
@@ -24,6 +25,22 @@ class Store(Document):
     lat = FloatField(required=True, max_length=10)
     # total number of people checkedin incremetd by statsd
     # total = IntField(required=True)
+
+
+class Movie(mongoengine.Document):
+    title = mongoengine.StringField()
+    year = mongoengine.IntField()
+    rated = mongoengine.StringField()
+    runtime = mongoengine.IntField()
+    countries = mongoengine.ListField()
+    genres = mongoengine.ListField()
+    director = mongoengine.StringField()
+    writers = mongoengine.ListField()
+    actors = mongoengine.ListField()
+    plot = mongoengine.StringField()
+    poster = mongoengine.StringField()
+    metacritic = mongoengine.IntField()
+    type = mongoengine.StringField()
 
 
 def createNewStore(storeName, storeLng, storeLat):

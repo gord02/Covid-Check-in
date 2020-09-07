@@ -1,12 +1,19 @@
+import mongoengine
 from flask import (Flask, render_template, request)
 # from schemas import *
 from schemas import createNewStore
+from schemas import Store
+from schemas import Movie
 # from createSchema import createStore
 
-import mongoengine
-
+from mongoengine import connect
+connect(db='cc')
 
 app = Flask("__main__")
+
+# app.config.from_pyfile('the-config.cfg')
+# db = MongoEngine(app)
+# app.config['MONGODB_DB'] = 'cc'
 
 
 @app.route("/")
@@ -32,6 +39,27 @@ def newStorePost():
                        storeLng=storeLng, storeLat=storeLat)
         return render_template("index.html")
         # return render_template("home.html")
+
+
+@app.route("/admin/stores")
+def allStores():
+    # stores = mongo.db.store.find({})
+    # todo = Todo.objects.get_or_404(_id=todo_id)
+    # stores = store.store.get_or_404()
+    # for Store.name in Store:
+    # for x in Store:
+    # print(Store.name)
+    # print(Store.name)
+    # print(Store.name)
+    # for store in Store:
+    #     print(store.name)
+    # Store.objects.first()
+    # Movie.objects.first()
+    # stores = cc.store.find()
+    # for x in stores:
+    #     print(x)
+    return render_template("index.html")
+    # stores=stores
 
 
 app.run(debug=True)

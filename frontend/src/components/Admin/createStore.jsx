@@ -4,8 +4,8 @@ class createStore extends Component {
 
     render() {
         return (
-            <div className="createStore">
-                <h1>SignUp</h1>
+            <div className="createStore container">
+                <h1>Add Store</h1>
                 {/*  onSubmit={(event) => { this.authEmailPassword(event) }} ref={(form) => { this.loginForm = form }}  */}
                 <form method="POST" action="/admin/newstore">
                     <div className="form-group">
