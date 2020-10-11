@@ -52,9 +52,11 @@ def allStores():
     # allows json to be found on this route
     return json_data
 
+# needed to correctly catch routes
 @app.route('/', defaults={'path': ''})
 @app.route('/<path:path>')
 def catch_all(path):
   return render_template("index.html")
 
 app.run(debug=True)
+

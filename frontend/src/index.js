@@ -6,11 +6,11 @@ import * as serviceWorker from "./serviceWorker";
 import "bootstrap/dist/css/bootstrap.min.css";
 import 'semantic-ui-css/semantic.min.css';
 
-
 ReactDOM.render(
   <React.StrictMode>
     {/* <Navbar /> */}
     <Apps />
+    {/* <allStores storeName={storeName} storeLng={storeLng} storeLat={storeLat} /> */}
   </React.StrictMode>,
   document.getElementById("root")
 );

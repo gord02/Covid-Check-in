@@ -1,10 +1,18 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
+import axios from 'axios';
 
-class AllStores extends Component {
 
+class AllStoresNIU extends Component {
+    // state={storeName, storeLng, storeLat};
     render(storeName, storeLng, storeLat) {
         // this is the individual items to be rendered therefore stores
         // const elements = ['one', 'two', 'three'];
+        console.log({storeName});
+        console.log({storeLng});
+        console.log({storeLat});
+        console.log(storeName);
+        console.log(storeLng);
+        console.log(storeLat);
         const elements = [storeName, storeLng, storeLat];
 
         // array that renders the stores
@@ -37,6 +45,32 @@ class AllStores extends Component {
             </React.Fragment>
 
         );
+    }
+}
+
+class AllStores extends React.Component {
+    state = {
+      stores: []
+    };
+  
+    componentDidMount() {
+      axios.get('/api/stores')
+        .then(res => {
+          // sets array of JSON objects to the vairble name stores
+          const stores = res.data;
+          console.log(stores);
+          console.log("============================")
+          console.log( typeof stores);
+          this.setState({ stores });
+        })
+    }
+  
+    render() {
+      return (
+        <ul>
+          { this.state.stores.map(store => <li>{store.name}</li>)}
+        </ul>
+      )
     }
 }
 
