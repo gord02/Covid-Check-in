@@ -14,6 +14,7 @@ import SearchStore from './components/Search/searchStore';
 import Filter from './components/Search/filter';
 import Map from './components/Search/map';
 import createStore from "./components/Admin/createStore";
+import allStores from "./components/Admin/allStores";
 
 class Apps extends Component {
     constructor() {
@@ -73,6 +74,7 @@ class Apps extends Component {
                     <Route exact path="/search/searchstore" component={SearchStore} />
                     <Route path="/search" component={Search} />
                     <Route path="/admin/newstore" component={createStore} />
+                    <Route path="/admin/stores" component={allStores} />
 
 
                     {/* <Route path="/search/maps" component={Map} /> */}

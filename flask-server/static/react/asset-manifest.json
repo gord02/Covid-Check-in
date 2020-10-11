@@ -1,26 +1,26 @@
 {
   "files": {
-    "main.css": "/static/react/css/main.48ef4922.chunk.css",
-    "main.js": "/static/react/js/main.fab4cfb9.chunk.js",
-    "main.js.map": "/static/react/js/main.fab4cfb9.chunk.js.map",
+    "main.css": "/static/react/css/main.60fab509.chunk.css",
+    "main.js": "/static/react/js/main.b76e9829.chunk.js",
+    "main.js.map": "/static/react/js/main.b76e9829.chunk.js.map",
     "runtime-main.js": "/static/react/js/runtime-main.d8763b2a.js",
     "runtime-main.js.map": "/static/react/js/runtime-main.d8763b2a.js.map",
-    "css/2.a2a7592a.chunk.css": "/static/react/css/2.a2a7592a.chunk.css",
-    "js/2.2fc541e9.chunk.js": "/static/react/js/2.2fc541e9.chunk.js",
-    "js/2.2fc541e9.chunk.js.map": "/static/react/js/2.2fc541e9.chunk.js.map",
+    "css/2.b3427b73.chunk.css": "/static/react/css/2.b3427b73.chunk.css",
+    "js/2.29ebc2cf.chunk.js": "/static/react/js/2.29ebc2cf.chunk.js",
+    "js/2.29ebc2cf.chunk.js.map": "/static/react/js/2.29ebc2cf.chunk.js.map",
     "../../templates/index.html": "/static/react/../../templates/index.html",
-    "css/2.a2a7592a.chunk.css.map": "/static/react/css/2.a2a7592a.chunk.css.map",
-    "css/main.48ef4922.chunk.css.map": "/static/react/css/main.48ef4922.chunk.css.map",
-    "js/2.2fc541e9.chunk.js.LICENSE.txt": "/static/react/js/2.2fc541e9.chunk.js.LICENSE.txt",
+    "css/2.b3427b73.chunk.css.map": "/static/react/css/2.b3427b73.chunk.css.map",
+    "css/main.60fab509.chunk.css.map": "/static/react/css/main.60fab509.chunk.css.map",
+    "js/2.29ebc2cf.chunk.js.LICENSE.txt": "/static/react/js/2.29ebc2cf.chunk.js.LICENSE.txt",
     "media/semantic.min.css": "/static/react/media/outline-icons.ef60a4f6.woff",
-    "precache-manifest.e90096769e995d37b34c122c00d457ca.js": "/static/react/precache-manifest.e90096769e995d37b34c122c00d457ca.js",
+    "precache-manifest.4a4cacff321f1448cc705dfd74aa39f8.js": "/static/react/precache-manifest.4a4cacff321f1448cc705dfd74aa39f8.js",
     "service-worker.js": "/static/react/service-worker.js"
   },
   "entrypoints": [
     "js/runtime-main.d8763b2a.js",
-    "css/2.a2a7592a.chunk.css",
-    "js/2.2fc541e9.chunk.js",
-    "css/main.48ef4922.chunk.css",
-    "js/main.fab4cfb9.chunk.js"
+    "css/2.b3427b73.chunk.css",
+    "js/2.29ebc2cf.chunk.js",
+    "css/main.60fab509.chunk.css",
+    "js/main.b76e9829.chunk.js"
   ]
 }

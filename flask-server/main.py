@@ -1,5 +1,7 @@
 import mongoengine
+# from mongoengine import connect
 from flask import (Flask, render_template, request)
+# from flask import Flask, render_template, request
 # from schemas import *
 from schemas import createNewStore
 from schemas import Store
@@ -7,7 +9,8 @@ from schemas import Movie
 # from createSchema import createStore
 
 from mongoengine import connect
-connect(db='cc')
+# connect(db='cc')
+connect(db='covid-checkin')
 
 app = Flask("__main__")
 
@@ -22,12 +25,12 @@ def my_index():
     return render_template("index.html")
 
 
-@app.route("/admin/newstore")
+@app.route("/api/newstore")
 def newStore():
     return render_template("index.html")
 
 
-@app.route("/admin/newstore", methods=["POST"])
+@app.route("/api/newstore", methods=["POST"])
 def newStorePost():
     if request.method == "POST":
         storeName = request.form["storeName"]
@@ -41,25 +44,17 @@ def newStorePost():
         # return render_template("home.html")
 
 
-@app.route("/admin/stores")
+@app.route("/api/stores")
 def allStores():
-    # stores = mongo.db.store.find({})
-    # todo = Todo.objects.get_or_404(_id=todo_id)
-    # stores = store.store.get_or_404()
-    # for Store.name in Store:
-    # for x in Store:
-    # print(Store.name)
-    # print(Store.name)
-    # print(Store.name)
-    # for store in Store:
-    #     print(store.name)
-    # Store.objects.first()
-    # Movie.objects.first()
-    # stores = cc.store.find()
-    # for x in stores:
-    #     print(x)
-    return render_template("index.html")
-    # stores=stores
+    # Converting mongoengine objects to JSON to be used by axios
+    all_stores = Store.objects()
+    json_data = all_stores.to_json()
+    # allows json to be found on this route
+    return json_data
 
+@app.route('/', defaults={'path': ''})
+@app.route('/<path:path>')
+def catch_all(path):
+  return render_template("index.html")
 
 app.run(debug=True)

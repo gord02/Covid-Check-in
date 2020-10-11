@@ -2,7 +2,8 @@ import mongoengine
 from mongoengine import StringField, IntField, ListField, Document, connect, EmbeddedDocument, EmbeddedDocumentField, DateTimeField, FloatField
 
 # connect('tumblelog')
-connect('cc')
+# connect('cc')
+connect('covid-checkin')
 
 
 class Checkin(EmbeddedDocument):
@@ -53,7 +54,7 @@ def createNewStore(storeName, storeLng, storeLat):
     store.lat = storeLat
     store.save()
 
-
+# print("hello")
 # store = Store(name="Freshco")
 # store.lat = 33.33
 # store.lng = 33.33
