@@ -58,9 +58,8 @@ class AllStores extends React.Component {
         .then(res => {
           // sets array of JSON objects to the vairble name stores
           const stores = res.data;
-          console.log(stores);
-          console.log("============================")
-          console.log( typeof stores);
+          // console.log(stores);
+          // console.log( typeof stores);
           this.setState({ stores });
         })
     }

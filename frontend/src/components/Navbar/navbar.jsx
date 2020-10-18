@@ -1,10 +1,14 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import "../Styles/styles.css";
+import axios from 'axios';
+import userNm from "../Register/signup";
 
 class Navbar extends Component {
   render() {
-
+    // console.log(this.props.user);
+    // console.log(this.props);
+    // console.log("value: " + this.props.value)
     return (
       <React.Fragment>
         <nav className="navbar sticky-top navbar-expand-lg navbar navbar-dark bg-dark " id="navbar nav">
@@ -25,6 +29,7 @@ class Navbar extends Component {
                 )
                 :
                 <React.Fragment>
+                  <li>value: {this.props.value}</li>
                   <Link to="/checkin" className="nav-link"><li>CheckIn</li></Link>
                   <Link to="/search" className="nav-link"><li>Search</li></Link>
                   <Link to="/logout" className="nav-link ">Logout</Link>

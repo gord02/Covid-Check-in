@@ -21,9 +21,13 @@ class Apps extends Component {
         super();
         this.state = {
             authenticated: false,
-            loading: true,
+            loading: true
         };
+ 
     };
+    // callbackFunction = (childData) => {
+    //     this.setState({userName: childData});
+    // };
 
     componentWillMount() {
         this.removeAuthListener = app.auth().onAuthStateChanged((user) => {
@@ -53,9 +57,12 @@ class Apps extends Component {
             );
         }
         return (
+            <React.Fragment>
+            {/* <SignUp parentCallback = {this.callbackFunction}/> */}
+            {/* <p> {this.state.userName} </p> */}
             <Router>
                 {/* <p>My Token = {window.token}</p> */}
-                <Navbar authenticated={this.state.authenticated} />
+                <Navbar authenticated={this.state.authenticated} userName={this.state.userName} value={this.state.value}/>
                 {/* Needs to be here so that state an ca be updated */}
 
                 {/* Switch is used to prevent multiple components from running at once when using routing */}
@@ -65,7 +72,11 @@ class Apps extends Component {
 
                     {/* this only renders the login component when the url typed in is login */}
                     <Route path="/login" component={Login} />
+                    {/* <Route path="/signup" component={SignUp} handleChange={this.state.handleChange} handleSubmit={this.state.handleSubmit} value={this.state.value} var={"dog"}/> */}
                     <Route path="/signup" component={SignUp} />
+                    {/* <Route path="/signup" render={(props) => <SignUp {...props} handleChange={this.state.handleChange} handleSubmit={this.state.handleSubmit} value={this.state.value} var={"dog"}/> }/> */}
+                    {/* <Route path="/signup" render={(props) => (<SignUp {...props} handleChange={this.state.handleChange} handleSubmit={this.state.handleSubmit} value={this.state.value} var={"dog"}/> )}/> */}
+                    
                     <Route path="/checkin" component={CheckIn} />
                     <Route exact path="/logout" component={Logout} />
 
@@ -80,6 +91,7 @@ class Apps extends Component {
                     {/* <Route path="/search/maps" component={Map} /> */}
                 </Switch>
             </Router>
+            </React.Fragment>
         );
     }
 }

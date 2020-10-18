@@ -18,7 +18,7 @@ class Logout extends Component {
 
     render() {
         if (this.state.redirect === true) {
-            console.log("here");
+            console.log("logged out");
             return (<Redirect to="/" />);
 
         }
