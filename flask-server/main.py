@@ -14,11 +14,6 @@ connect(db='covid-checkin')
 
 app = Flask("__main__")
 
-# app.config.from_pyfile('the-config.cfg')
-# db = MongoEngine(app)
-# app.config['MONGODB_DB'] = 'cc'
-
-
 @app.route("/")
 def my_index():
     # , flask_token="Hello   world"
@@ -51,6 +46,28 @@ def allStores():
     json_data = all_stores.to_json()
     # allows json to be found on this route
     return json_data
+
+
+
+
+# additonal signup sutff, sotre additional name for user
+@app.route("/api/createUsername")
+def createUsername():
+    
+    if request.method == "POST":
+        userName = request.form["name"]
+        # _id=
+    return render_template("index.html")
+#get id from fribase
+#make request post to backened to finsh setting up user, username 
+#query based on the id to database 
+#querying collection named users to get specific user with a username, return username property 
+# 2 routes getuserName 
+#post reuqest to pass in firbase id and email and username
+
+#route to get the username 
+# Logic is top level Apps and the pass it down
+#in fronterd in app firbase logic is cotained, when user is loggged in update state vairble for user id and user name, get request from backend function name: getUserName, then pass vairbles to navbar, axios get request in Apps
 
 # needed to correctly catch routes
 @app.route('/', defaults={'path': ''})
