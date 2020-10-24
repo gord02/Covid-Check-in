@@ -22,48 +22,27 @@ class SignUp extends Component {
         // this.handleChange = this.handleChange.bind(this);
         // this.handleSubmit = this.handleSubmit.bind(this);
     }
-    
+    // tracks changes on input value to username, paramter passed in is event from username input
       handleChange = event => {
+        //   anything added in the name input of form is added to state
         this.setState({ name: event.target.value });
         // this.setState({ email: event.target.value });
         // this.setState({id: firebase.auth().currentUser});
       }
-    
-      handlesSubmit = event => {
-        event.preventDefault();
-    
-        const user = {
-          name: this.state.name,
-          email: this.state.email,
-          id: this.state.id
-        };
-    
-        // axios.post(`/api/createUsername`, { user })
-        //   .then(res => {
-        //     console.log("res:" + res);
-        //     console.log("res.data:"+res.data);
-        //   })
-        axios({
-            method:'post',
-            url:'/api/createUsername',
-            data: {
-                user: user
-            }
-          }).then(function (response) {
-              console.log(response);
-            })
-            .catch(function (error) {
-              console.log(error);
-            });  
-      }  
 
     authEmailPassword(event) {
+        // Stops broswer from reloading the page
         event.preventDefault();
         console.log("authed with email");
         const email = this.emailInput.value;
         const password = this.passwordInput.value;
         console.log(email);
-
+        const user = {
+            name: this.state.name,
+            email: this.state.email,
+            id: this.state.id
+        };
+        let firbaseId= 5;
         // this will check if anyone has the email 
         app.auth().fetchSignInMethodsForEmail(email)
             .then((providers) => {
@@ -72,6 +51,36 @@ class SignUp extends Component {
                     // create user
                     app.auth().createUserWithEmailAndPassword(email, password);
                     this.props.history.push('/');
+            
+                    var user = firebase.auth().currentUser;
+                    console.log("user: "+ user);
+                    if (user != null) {
+                        console.log("user.uid:"+ user.uid)
+                        firbaseId = user.uid; 
+                    }
+                    // console.log('uid',data.user.uid)
+                    // console.log('userid: '+ user.uid);
+                    // let firbaseId= user.uid;
+                    // firebase.auth().createUserWithEmailAndPassword(email, password)
+                    // .then(function(user){
+                    // });
+                    // stackoverflow stuff and axios call , we will then have user id and name and email
+                    axios({
+                        method:'post',
+                        url:'/api/createUser',
+                        // data to be passed to backend
+                        data: {
+                            user: user,
+                            firbaseId: firbaseId
+                        }
+                    }).then(function (response) {
+                        //   console.log("response:" + response);
+                        //   console.log("response.data:" + response.data);
+                        })
+                        .catch(function (error) {
+                          console.log(error);
+                        });  
+                    console.log("here 1  ??");
                     return (<Redirect to="/" />);
                 }
                 else if (providers.indexOf("password") === -1) {
@@ -85,6 +94,7 @@ class SignUp extends Component {
             })
             .then((user) => {
                 if (user && user.email) {
+                    console.log("here??");
                     this.loginForm.reset();
                     this.setState({ redirect: true });
                 }
@@ -96,7 +106,6 @@ class SignUp extends Component {
     }
 
     render() {
-
         if (this.state.redirect) {
             return (<Redirect to='/' />);
         }
@@ -104,7 +113,7 @@ class SignUp extends Component {
             <React.Fragment>
                 <div className="loginPage">
                     <h1>SignUp</h1>
-                    <form onSubmit={(event) => { this.authEmailPassword(event) }} ref={(form) => { this.loginForm = form }} onSubmit={this.handlesSubmit}>
+                    <form onSubmit={(event) => { this.authEmailPassword(event) }} ref={(form) => { this.loginForm = form }}>
                         <div className="form-group">
                             <label htmlFor="exampleInputUsername">Username</label>
                             {/* <input type="text" name="userName" value={this.props.value} onChange={this.handleChange} />    */}
@@ -122,7 +131,7 @@ class SignUp extends Component {
                             <input type="password" name="pass" className="form-control" id="exampleInputPassword1" placeholder="Password" ref={(input) => { this.passwordInput = input }} ></input>
                         </div>
                         <div>
-                            <button type="submit" className="btn btn-primary" onSubmit={this.props.handleSubmit} >Create User</button>
+                            <button type="submit" className="btn btn-primary" >Create User</button>
 
                         </div>
                     </form>
