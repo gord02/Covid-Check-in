@@ -40,9 +40,8 @@ class SignUp extends Component {
         const user = {
             name: this.state.name,
             email: this.state.email,
-            id: this.state.id
+            // id: this.state.id
         };
-        let firbaseId= 5;
         // this will check if anyone has the email 
         app.auth().fetchSignInMethodsForEmail(email)
             .then((providers) => {
@@ -52,15 +51,9 @@ class SignUp extends Component {
                     app.auth().createUserWithEmailAndPassword(email, password);
                     this.props.history.push('/');
             
-                    var user = firebase.auth().currentUser;
-                    console.log("user: "+ user);
-                    if (user != null) {
-                        console.log("user.uid:"+ user.uid)
-                        firbaseId = user.uid; 
-                    }
                     // console.log('uid',data.user.uid)
                     // console.log('userid: '+ user.uid);
-                    // let firbaseId= user.uid;
+                    // let firebaseId= user.uid;
                     // firebase.auth().createUserWithEmailAndPassword(email, password)
                     // .then(function(user){
                     // });
@@ -71,7 +64,7 @@ class SignUp extends Component {
                         // data to be passed to backend
                         data: {
                             user: user,
-                            firbaseId: firbaseId
+                            // firbaseId: firbaseId
                         }
                     }).then(function (response) {
                         //   console.log("response:" + response);
@@ -80,8 +73,8 @@ class SignUp extends Component {
                         .catch(function (error) {
                           console.log(error);
                         });  
-                    console.log("here 1  ??");
-                    return (<Redirect to="/" />);
+                        this.finsihAxios();
+                    // return (<Redirect to="/" />);
                 }
                 else if (providers.indexOf("password") === -1) {
                     // they used google 
@@ -94,7 +87,9 @@ class SignUp extends Component {
             })
             .then((user) => {
                 if (user && user.email) {
-                    console.log("here??");
+                    console.log("here?")
+                    var user = firebase.auth().currentUser;
+                    console.log("user: "+ user);
                     this.loginForm.reset();
                     this.setState({ redirect: true });
                 }
@@ -104,6 +99,36 @@ class SignUp extends Component {
                 alert(error);
             })
     }
+
+    finsihAxios(){
+        // let firebaseId= 5;
+
+        var user = app.auth().currentUser;
+        app.auth().onAuthStateChanged(function(user) {
+            if (user) {
+                var user = app.auth().currentUser;
+                console.log("user.uid:"+ user.uid);
+                const firebaseId = user.uid; 
+                console.log("id: " + firebaseId);
+                axios({
+                    method:'post',
+                    url:'/api/createUser',
+                    // data to be passed to backend
+                    data: {
+                        firebaseId: firebaseId
+                    }
+                })
+
+            }
+        });       
+        // console.log("user: "+ user);
+        // if (user != null) {
+        //     console.log("user.uid:"+ user.uid);
+        //     let firebaseId = user.uid; 
+        // }
+    }
+
+    // onClick={this.finsihAxios}
 
     render() {
         if (this.state.redirect) {
