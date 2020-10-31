@@ -12,10 +12,10 @@ class SignUp extends Component {
     constructor(props) {
         super(props);
         this.authEmailPassword = this.authEmailPassword.bind(this);
+        // this.onSelectLanguage = this.onSelectLanguage.bind(this);
         // this.userName= this.userNameInput(this);
         this.state = {
             redirect: false,
-            name: "",
             // email: "",
             // id: 6
         }
@@ -36,12 +36,11 @@ class SignUp extends Component {
         console.log("authed with email");
         const email = this.emailInput.value;
         const password = this.passwordInput.value;
+        const name= this.usernameInput.value;
+        // this.props.onSelectLanguage(name);   
+    
         console.log(email);
-        const user = {
-            name: this.state.name,
-            email: this.state.email,
-            // id: this.state.id
-        };
+       
         // this will check if anyone has the email 
         app.auth().fetchSignInMethodsForEmail(email)
             .then((providers) => {
@@ -58,22 +57,58 @@ class SignUp extends Component {
                     // .then(function(user){
                     // });
                     // stackoverflow stuff and axios call , we will then have user id and name and email
-                    axios({
-                        method:'post',
-                        url:'/api/createUser',
-                        // data to be passed to backend
-                        data: {
-                            user: user,
-                            // firbaseId: firbaseId
+                    // axios({
+                    //     method:'post',
+                    //     url:'/api/createUser',
+                    //     // data to be passed to backend
+                    //     data: {
+                    //         // firbaseId: firbaseId
+                    //     }
+                    // }).then(function (response) {
+                    //     //   console.log("response:" + response);
+                    //     //   console.log("response.data:" + response.data);
+                    //     })
+                    //     .catch(function (error) {
+                    //       console.log(error);
+                    //     });  
+
+                        // define varible for username, dont use state for username 
+                        // remove state
+                        // crate vairble form username and get it from from
+                        // delte user object on 40 
+                        // move finishaxios isnt needed
+                        // apps line 34 add get axios request 
+
+                    // var user = app.auth().currentUser;
+                    app.auth().onAuthStateChanged(function(user) {
+                        if (user) {
+                            console.log("user: ",user)
+                            var user = app.auth().currentUser;
+                            console.log("user.uid:"+ user.uid);
+                            const firebaseId = user.uid; 
+                            console.log("id: " + firebaseId);
+                            const userInfo = {
+                                name: name,
+                                email: email,
+                                firebaseId: firebaseId
+                            };
+                            axios({
+                                method:'post',
+                                url:'/api/createUser',
+                                // data to be passed to backend
+                                data: {
+                                    userInfo: userInfo
+                                }
+                            })
+                            .catch(function (error) {
+                                console.log(error);
+                            });  
+                            // sending username of currently signed in user from form to props
+                            // name= this.usernameInput.value
                         }
-                    }).then(function (response) {
-                        //   console.log("response:" + response);
-                        //   console.log("response.data:" + response.data);
-                        })
-                        .catch(function (error) {
-                          console.log(error);
-                        });  
-                        this.finsihAxios();
+                    });   
+
+                    // return (<Redirect to="/" />);
                     // return (<Redirect to="/" />);
                 }
                 else if (providers.indexOf("password") === -1) {
@@ -87,9 +122,9 @@ class SignUp extends Component {
             })
             .then((user) => {
                 if (user && user.email) {
-                    console.log("here?")
-                    var user = firebase.auth().currentUser;
-                    console.log("user: "+ user);
+                    // console.log("here?")
+                    // var user = firebase.auth().currentUser;
+                    // console.log("user: "+ user);
                     this.loginForm.reset();
                     this.setState({ redirect: true });
                 }
@@ -99,34 +134,37 @@ class SignUp extends Component {
                 alert(error);
             })
     }
-
-    finsihAxios(){
-        // let firebaseId= 5;
-
-        var user = app.auth().currentUser;
-        app.auth().onAuthStateChanged(function(user) {
-            if (user) {
-                var user = app.auth().currentUser;
-                console.log("user.uid:"+ user.uid);
-                const firebaseId = user.uid; 
-                console.log("id: " + firebaseId);
-                axios({
-                    method:'post',
-                    url:'/api/createUser',
-                    // data to be passed to backend
-                    data: {
-                        firebaseId: firebaseId
-                    }
-                })
-
-            }
-        });       
+    // handleLangChange = () => {
+                
+    // }
+    // finsihAxios(){
+        // var user = app.auth().currentUser;
+        // app.auth().onAuthStateChanged(function(user) {
+        //     if (user) {
+        //         var user = app.auth().currentUser;
+        //         console.log("user.uid:"+ user.uid);
+        //         const firebaseId = user.uid; 
+        //         console.log("id: " + firebaseId);
+        //         axios({
+        //             method:'post',
+        //             url:'/api/createUser',
+        //             // data to be passed to backend
+        //             data: {
+        //                 user: user,
+        //                 firebaseId: firebaseId
+        //             }
+        //         })
+        //         .catch(function (error) {
+        //             console.log(error);
+        //           });  
+        //     }
+        // });       
         // console.log("user: "+ user);
         // if (user != null) {
         //     console.log("user.uid:"+ user.uid);
         //     let firebaseId = user.uid; 
         // }
-    }
+    // }
 
     // onClick={this.finsihAxios}
 
@@ -142,7 +180,7 @@ class SignUp extends Component {
                         <div className="form-group">
                             <label htmlFor="exampleInputUsername">Username</label>
                             {/* <input type="text" name="userName" value={this.props.value} onChange={this.handleChange} />    */}
-                            <input type="text" name="name" onChange={this.handleChange} /> 
+                            <input type="text" name="username" ref={(input) => { this.usernameInput = input }}/> 
                             {/* <input type="text" name="name" placeholder="Username" ref={(input) => { this.userNameInput = input }}  value={this.state.userName} onChange={this.handleUserName} userName={this.state.userName} onChange={this.handleChange} /> */}
                             {/* <input type="name" name="name" className="form-control" id="exampleInputUsername" placeholder="Username" ref={(input) => { this.userNameInput = input }} ></input> */}
                             {/* <input type="name" name="name" className="form-control" id="exampleInputUsername" placeholder="Username" ref={(input) => { this.sendData() = input }}></input> */}

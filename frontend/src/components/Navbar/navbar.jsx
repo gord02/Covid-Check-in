@@ -29,7 +29,7 @@ class Navbar extends Component {
                 )
                 :
                 <React.Fragment>
-                  {/* <li>value: {this.props.value}</li> */}
+                  <li> {this.props.username}</li>
                   <Link to="/checkin" className="nav-link"><li>CheckIn</li></Link>
                   <Link to="/search" className="nav-link"><li>Search</li></Link>
                   <Link to="/logout" className="nav-link ">Logout</Link>

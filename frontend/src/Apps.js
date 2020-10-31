@@ -21,7 +21,8 @@ class Apps extends Component {
         super();
         this.state = {
             authenticated: false,
-            loading: true
+            loading: true,
+            username: '' 
         };
  
     };
@@ -49,6 +50,12 @@ class Apps extends Component {
         this.removeAuthListener();
     }
 
+
+    handleLanguage = (name) => {
+        this.setState({username: name});
+    }
+
+
     render() {
         // it takes time in-between getting user authentication therefore something is loaded in its place
         if (this.state.loading === true) {
@@ -62,7 +69,7 @@ class Apps extends Component {
             {/* <p> {this.state.userName} </p> */}
             <Router>
                 {/* <p>My Token = {window.token}</p> */}
-                <Navbar authenticated={this.state.authenticated} userName={this.state.userName} value={this.state.value}/>
+                <Navbar authenticated={this.state.authenticated} username={this.state.username}/>
                 {/* Needs to be here so that state an ca be updated */}
 
                 {/* Switch is used to prevent multiple components from running at once when using routing */}
@@ -73,8 +80,13 @@ class Apps extends Component {
                     {/* this only renders the login component when the url typed in is login */}
                     <Route path="/login" component={Login} />
                     {/* <Route path="/signup" component={SignUp} handleChange={this.state.handleChange} handleSubmit={this.state.handleSubmit} value={this.state.value} var={"dog"}/> */}
-                    <Route path="/signup" component={SignUp} />
-                    {/* <Route path="/signup" render={(props) => <SignUp {...props} handleChange={this.state.handleChange} handleSubmit={this.state.handleSubmit} value={this.state.value} var={"dog"}/> }/> */}
+                    {/* <Route path="/signup" component={SignUp} /> */}
+                    {/* <Route path="/signup" render={props => <SignUp onSelectLanguage={this.handleLanguage} />} /> */}
+                    {/* <Route exact path="/singup" onSelectLanguage={this.handleLanguage} component={SignUp} /> */}
+                    <Route exact path="/signup" component={() => <SignUp onSelectLanguage={this.handleLanguage} />} />
+                    {/* <Route path="/signup" render={props => (<SignUp {...props} onSelectLanguage={this.handleLanguage}/>)}/> */}
+                    {/* <Route exact path="/signup" render={props => <SignUp {...props} onSelectLanguage={this.handleLanguage}/>} /> */}
+                    {/* <Route path="/signup" render={(props) => <SignUp {...props } onSelectLanguage={this.handleLanguage} vars={"dog"}/> }/> */}
                     {/* <Route path="/signup" render={(props) => (<SignUp {...props} handleChange={this.state.handleChange} handleSubmit={this.state.handleSubmit} value={this.state.value} var={"dog"}/> )}/> */}
                     
                     <Route path="/checkin" component={CheckIn} />
