@@ -19,7 +19,8 @@ app = Flask("__main__")
 @app.route("/")
 def my_index():
     # , flask_token="Hello   world"
-    return render_template("index.html")
+    return ("hellos")
+    # return render_template("index.html")
 
 
 @app.route("/api/newstore")
