@@ -8,8 +8,6 @@ from schemas import Store
 from schemas import Movie
 # from createSchema import createStore
 
-import json
-
 from mongoengine import connect
 # connect(db='cc')
 connect(db='covid-checkin')
@@ -56,53 +54,21 @@ def allStores():
 # additonal signup sutff, sotre additional name for user
 @app.route("/api/createUser", methods=['POST'])
 def createUser():
-    # print(request.method())
-    # print("args: ", request.args)
-    # print("data: ", request.data)
-    # print("form: ",request.form)
-    # print("json: ", request.json)
-    # print("get_json: ", request.get_json())
-    # username = request.form.getlist('username')
-    # username = request.args.getlist('username')
-    # username = request.form.getlist('username[]')
-    # username = request.args.getlist('username[]')
-    # pippo =  request.form.getlist('firebaseId')
-    # pippo2 =  request.form.getlist('username')
-    # print("pippo: ", pippo, pippo2)
-    # data = request.form.to_dict()
-    # data['some_key'] = "Some Value"
-    # email= request.form['email']
-    # username = request.form['username']
-    # firbaseId = request.form['firebaseId']
-    # print(email, username, firbaseId)
-    # print("getlist",request.form.getlist)
-    # data= request.get_json()
-    data= request.json
-    print("data: ", type(data))
-    obj = json.loads(data)
-    print("obj: ",type(obj))
-    print("obj: ",obj)
-    _id = obj["firebaseId"]
-    # print("data: ", data)
-    # print(type(data))
-    # print("data1: ", data.userInfo)
-    # print("keys: ", data.keys())
-    # print("data2: ", data[1])
-    # print("data3: ", data[2])
-    # print("data4: ", data[3])
-    # print("data5: ", data[4])
-
-    # username= data.name
-    # print("data: ", data, "username: ", username)
-
-
-
-    # _id= userInfo.firbaseId
-    # username= userInfo.name
-    # email=userInfo.email
-    # email=request.data.
-    # print(_id)
-    return "Ok"
+    if request.method == 'POST':
+        username= request.args.get("name")
+        email= request.args.get("email")
+        _id= request.args.get("firbaseId")
+        username2= request.form.get("name")
+        email2= request.form.get("email")
+        _id2= request.form["firbaseId"]
+        print(username, email, _id)
+        print(username2, email2, _id2)
+    # post request with axios
+    # if request.method == "POST":
+        # userName = request.post["name"] #change to res or something            IS WRONG
+        # print("userName")
+        # _id=
+    return "ok"
 #get id from fribase
 
 #make request post to backened to finsh setting up user, username 
@@ -112,9 +78,8 @@ def createUser():
 #post reuqest to pass in firbase id and email and username
 
 #route to get the username 
-@app.route("/api/getUser")
-def getUser():
-    uk_users = User.objects(country='uk')
+@app.route("/api/SignUser")
+def signInUser():
     return "okay"
 # Logic is top level (Apps) and the pass it down
 #in fronterd in app firbase logic is cotained, when user is loggged in update state vairble for user id and user name, get request from backend function name: getUserName, then pass vairbles to navbar, axios get request in Apps
