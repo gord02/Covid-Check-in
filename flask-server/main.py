@@ -10,14 +10,14 @@ from schemas import Movie
 
 from mongoengine import connect
 # connect(db='cc')
-connect(db='covid-checkin')
+# connect(db='covid-checkin')
 
 app = Flask("__main__")
 
 @app.route("/")
 def my_index():
     # , flask_token="Hello   world"
-    return ("hellos")
+    return "hellos"
     # return render_template("index.html")
 
 
@@ -85,10 +85,10 @@ def signInUser():
 #in fronterd in app firbase logic is cotained, when user is loggged in update state vairble for user id and user name, get request from backend function name: getUserName, then pass vairbles to navbar, axios get request in Apps
 
 # needed to correctly catch routes
-@app.route('/', defaults={'path': ''})
-@app.route('/<path:path>')
-def catch_all(path):
-    return render_template("index.html")
+# @app.route('/', defaults={'path': ''})
+# @app.route('/<path:path>')
+# def catch_all(path):
+#     return render_template("index.html")
 
 app.run(debug=True)
 
