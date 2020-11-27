@@ -17,8 +17,7 @@ app = Flask("__main__")
 @app.route("/")
 def my_index():
     # , flask_token="Hello   world"
-    return "hellos"
-    # return render_template("index.html")
+    return render_template("index.html")
 
 
 @app.route("/api/newstore")
@@ -57,12 +56,30 @@ def createUser():
     if request.method == 'POST':
         username= request.args.get("name")
         email= request.args.get("email")
-        _id= request.args.get("firbaseId")
+        _id= request.args.get("firebaseId")
+
+        form= request.form.get()
+        print("================this is the request", form,  "---", type(form))
         username2= request.form.get("name")
         email2= request.form.get("email")
-        _id2= request.form["firbaseId"]
-        print(username, email, _id)
-        print(username2, email2, _id2)
+        _id2= request.form.get("firebaseId")
+        # print(username, email, _id)
+        # print(username2, email2, _id2)
+
+        # class form:
+        #     name='name'
+        #     email= "email"
+        #     _id= "firebaseId"
+
+        # def func1(self):
+        #     print("Hello from my function")
+        # print ("data name", form.name)
+        # print ("data name", form.name)
+        # print ("data name", form.name)
+        # print getattr(StateInfo,'StateName')
+        # print hasattr(form, 'name')
+
+
     # post request with axios
     # if request.method == "POST":
         # userName = request.post["name"] #change to res or something            IS WRONG
