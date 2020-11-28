@@ -17,7 +17,8 @@ class Checkin(EmbeddedDocument):
 class User(Document):
     email = StringField(required=True)
     name = StringField(max_length=50)
-    user_name = StringField(max_length=50)
+    # user_name = StringField(max_length=50)
+    _id= StringField(required=True)
 
 
 class Store(Document):

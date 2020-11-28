@@ -5,12 +5,13 @@ from flask import (Flask, render_template, request)
 # from schemas import *
 from schemas import createNewStore
 from schemas import Store
+from schemas import User
 from schemas import Movie
 # from createSchema import createStore
 
 from mongoengine import connect
 # connect(db='cc')
-# connect(db='covid-checkin')
+connect(db='covid-checkin')
 
 app = Flask("__main__")
 
@@ -59,8 +60,13 @@ def createUser():
         name= form['name']
         email= form['email']
         _id= form['firebaseId']
-        print("userInfo:   ", name, email, _id)
-   
+        # print("userInfo:   ", name, email, _id)
+        user = User(name=name)
+        user.email= email
+        user._id= _id
+        user.save()
+
+
     return "ok"
 #get id from fribase
 

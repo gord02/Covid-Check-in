@@ -1,24 +1,31 @@
 import React, { Component } from "react";
 import { Redirect } from "react-router-dom";
 import { app } from "../../firebase";
+import { withRouter } from 'react-router';
 import Apps from "../../Apps";
 
 import firebase from "firebase"
 import "firebase/auth";
 import Navbar from "../Navbar/navbar";
 import axios from 'axios';
+import { useHistory } from "react-router-dom";
+// import createBrowserHistory from 'history lib createBrowserHistor';
+
+// import history from '../../history';
+// import history from './history';
 
 class SignUp extends Component {
     constructor(props) {
         super(props);
         this.authEmailPassword = this.authEmailPassword.bind(this);
-        // this.onSelectLanguage = this.onSelectLanguage.bind(this);
         // this.userName= this.userNameInput(this);
         this.state = {
             redirect: false,
             // email: "",
             // id: 6
         }
+        // const history = createBrowserHistory();
+
         // this.handleChange = this.handleChange.bind(this);
         // this.handleSubmit = this.handleSubmit.bind(this);
     }
@@ -31,9 +38,11 @@ class SignUp extends Component {
       }
 
     authEmailPassword(event) {
-        // Stops broswer from reloading the page
+        // Stops broswer from relo
+        const { history } = this.props;
         event.preventDefault();
         console.log("authed with email");
+        // const history = useHistory();
         const email = this.emailInput.value;
         const password = this.passwordInput.value;
         const name= this.usernameInput.value;
@@ -48,7 +57,10 @@ class SignUp extends Component {
                 if (providers.length === 0) {
                     // create user
                     app.auth().createUserWithEmailAndPassword(email, password);
-                    this.props.history.push('/');
+                    // this.props.history.push('/');
+                    history.push('/');
+                    // return (<Redirect to="/" />);
+             
             
                     // console.log('uid',data.user.uid)
                     // console.log('userid: '+ user.uid);
@@ -87,17 +99,18 @@ class SignUp extends Component {
                             console.log("user.uid:"+ user.uid);
                             const firebaseId = user.uid; 
                             console.log("id: " + firebaseId);
-                            const userInfo = {
-                                name: name,
-                                email: email,
-                                firebaseId: firebaseId
-                            };
+                            // const userInfo = {
+                            //     name: name,
+                            //     email: email,
+                            //     firebaseId: firebaseId
+                            // };
                             axios({
                                 method:'post',
                                 url:'/api/createUser',
                                 // data to be passed to backend
                                 data: {
-                                    userInfo: userInfo
+                                    // userInfo: userInfo
+                                    name, email, firebaseId
                                 }
                             })
                             .catch(function (error) {
@@ -205,5 +218,5 @@ class SignUp extends Component {
             );
     }
 }
-export default SignUp;
+export default withRouter(SignUp);
 

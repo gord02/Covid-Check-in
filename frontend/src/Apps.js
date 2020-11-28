@@ -15,6 +15,8 @@ import Filter from './components/Search/filter';
 import Map from './components/Search/map';
 import createStore from "./components/Admin/createStore";
 import allStores from "./components/Admin/allStores";
+// import history from './history';
+// import History  from 'history'
 
 class Apps extends Component {
     constructor() {
@@ -83,7 +85,8 @@ class Apps extends Component {
                     {/* <Route path="/signup" component={SignUp} /> */}
                     {/* <Route path="/signup" render={props => <SignUp onSelectLanguage={this.handleLanguage} />} /> */}
                     {/* <Route exact path="/singup" onSelectLanguage={this.handleLanguage} component={SignUp} /> */}
-                    <Route exact path="/signup" component={() => <SignUp onSelectLanguage={this.handleLanguage} />} />
+                    <Route exact path="/signup" component={() => <SignUp history={History}/>} />
+                    {/* onSelectLanguage={this.handleLanguage}  */}
                     {/* <Route path="/signup" render={props => (<SignUp {...props} onSelectLanguage={this.handleLanguage}/>)}/> */}
                     {/* <Route exact path="/signup" render={props => <SignUp {...props} onSelectLanguage={this.handleLanguage}/>} /> */}
                     {/* <Route path="/signup" render={(props) => <SignUp {...props } onSelectLanguage={this.handleLanguage} vars={"dog"}/> }/> */}
