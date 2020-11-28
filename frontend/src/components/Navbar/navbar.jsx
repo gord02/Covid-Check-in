@@ -22,14 +22,17 @@ class Navbar extends Component {
               {/* Data that is dependent on authentication */}
               {this.props.authenticated === false
                 ? (
+                  // when not autheticated
                   <React.Fragment>
                     <Link to="/login" className="nav-link"><li>Login</li></Link>
                     <Link to="/signup" className="nav-link"><li>SignUp</li></Link>
                   </React.Fragment>
                 )
                 :
+                // when signed in
                 <React.Fragment>
                   <li> {this.props.username}</li>
+                {/* <li>{username}</li> */}
                   <Link to="/checkin" className="nav-link"><li>CheckIn</li></Link>
                   <Link to="/search" className="nav-link"><li>Search</li></Link>
                   <Link to="/logout" className="nav-link ">Logout</Link>

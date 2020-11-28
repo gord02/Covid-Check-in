@@ -14,7 +14,7 @@ class Login extends Component {
       redirect: false,
     }
   }
-
+  
   authWithGoogle() {
     console.log("authed with google");
     app.auth().signInWithPopup(googleProvider)

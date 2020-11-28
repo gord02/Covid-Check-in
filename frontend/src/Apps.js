@@ -15,6 +15,7 @@ import Filter from './components/Search/filter';
 import Map from './components/Search/map';
 import createStore from "./components/Admin/createStore";
 import allStores from "./components/Admin/allStores";
+import axios from 'axios';
 // import history from './history';
 // import History  from 'history'
 
@@ -28,9 +29,18 @@ class Apps extends Component {
         };
  
     };
-    // callbackFunction = (childData) => {
-    //     this.setState({userName: childData});
-    // };
+    getUserName() {
+        axios.get('/api/createUser')
+        .then((response) => {
+          const username = response.data;
+          this.setState({ username });
+          // console.log(response.data);
+          // console.log(response.status);
+          // console.log(response.statusText);
+          // console.log(response.headers);
+          // console.log(response.config);
+        });
+    }
 
     componentWillMount() {
         this.removeAuthListener = app.auth().onAuthStateChanged((user) => {
@@ -80,13 +90,13 @@ class Apps extends Component {
                     <Route exact path="/" component={Home} />
 
                     {/* this only renders the login component when the url typed in is login */}
-                    <Route path="/login" component={Login} />
+                    <Route path="/login" component={() => <Login username={this.state.username}/>}/>
                     {/* <Route path="/signup" component={SignUp} handleChange={this.state.handleChange} handleSubmit={this.state.handleSubmit} value={this.state.value} var={"dog"}/> */}
                     {/* <Route path="/signup" component={SignUp} /> */}
                     {/* <Route path="/signup" render={props => <SignUp onSelectLanguage={this.handleLanguage} />} /> */}
                     {/* <Route exact path="/singup" onSelectLanguage={this.handleLanguage} component={SignUp} /> */}
-                    <Route exact path="/signup" component={() => <SignUp history={History}/>} />
-                    {/* onSelectLanguage={this.handleLanguage}  */}
+                    <Route exact path="/signup" component={SignUp}  />
+                    {/* onSelectLanguage={this.handleLanguage} component={() => <SignUp history={History}/>} */}
                     {/* <Route path="/signup" render={props => (<SignUp {...props} onSelectLanguage={this.handleLanguage}/>)}/> */}
                     {/* <Route exact path="/signup" render={props => <SignUp {...props} onSelectLanguage={this.handleLanguage}/>} /> */}
                     {/* <Route path="/signup" render={(props) => <SignUp {...props } onSelectLanguage={this.handleLanguage} vars={"dog"}/> }/> */}
