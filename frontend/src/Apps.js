@@ -32,8 +32,11 @@ class Apps extends Component {
     getUserName() {
         axios.get('/api/createUser')
         .then((response) => {
-          const username = response.data;
-          this.setState({ username });
+            console.log("jello");
+            const username = response.data;
+            console.log("type of username: ", typeof(username), "username: ", username);
+            // console.log("username: ", username);
+            this.setState({ username });
           // console.log(response.data);
           // console.log(response.status);
           // console.log(response.statusText);
@@ -81,6 +84,7 @@ class Apps extends Component {
             {/* <p> {this.state.userName} </p> */}
             <Router>
                 {/* <p>My Token = {window.token}</p> */}
+                {/* {this.getUserName()} */}
                 <Navbar authenticated={this.state.authenticated} username={this.state.username}/>
                 {/* Needs to be here so that state an ca be updated */}
 

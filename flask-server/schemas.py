@@ -29,22 +29,6 @@ class Store(Document):
     # total = IntField(required=True)
 
 
-class Movie(mongoengine.Document):
-    title = mongoengine.StringField()
-    year = mongoengine.IntField()
-    rated = mongoengine.StringField()
-    runtime = mongoengine.IntField()
-    countries = mongoengine.ListField()
-    genres = mongoengine.ListField()
-    director = mongoengine.StringField()
-    writers = mongoengine.ListField()
-    actors = mongoengine.ListField()
-    plot = mongoengine.StringField()
-    poster = mongoengine.StringField()
-    metacritic = mongoengine.IntField()
-    type = mongoengine.StringField()
-
-
 def createNewStore(storeName, storeLng, storeLat):
     # store = Store(name="Tim Hortons")
     # store.lat = 44.44

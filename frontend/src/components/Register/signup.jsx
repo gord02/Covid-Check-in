@@ -47,7 +47,6 @@ class SignUp extends Component {
         const password = this.passwordInput.value;
         const name= this.usernameInput.value;
         // this.props.onSelectLanguage(name);   
-    
         console.log(email);
        
         // this will check if anyone has the email 
@@ -94,9 +93,9 @@ class SignUp extends Component {
                     // var user = app.auth().currentUser;
                     app.auth().onAuthStateChanged(function(user) {
                         if (user) {
-                            console.log("user: ",user)
+                            // console.log("user: ",user)
                             var user = app.auth().currentUser;
-                            console.log("user.uid:"+ user.uid);
+                            // console.log("user.uid:"+ user.uid);
                             const firebaseId = user.uid; 
                             console.log("id: " + firebaseId);
                             // const userInfo = {
@@ -147,39 +146,6 @@ class SignUp extends Component {
                 alert(error);
             })
     }
-    // handleLangChange = () => {
-                
-    // }
-    // finsihAxios(){
-        // var user = app.auth().currentUser;
-        // app.auth().onAuthStateChanged(function(user) {
-        //     if (user) {
-        //         var user = app.auth().currentUser;
-        //         console.log("user.uid:"+ user.uid);
-        //         const firebaseId = user.uid; 
-        //         console.log("id: " + firebaseId);
-        //         axios({
-        //             method:'post',
-        //             url:'/api/createUser',
-        //             // data to be passed to backend
-        //             data: {
-        //                 user: user,
-        //                 firebaseId: firebaseId
-        //             }
-        //         })
-        //         .catch(function (error) {
-        //             console.log(error);
-        //           });  
-        //     }
-        // });       
-        // console.log("user: "+ user);
-        // if (user != null) {
-        //     console.log("user.uid:"+ user.uid);
-        //     let firebaseId = user.uid; 
-        // }
-    // }
-
-    // onClick={this.finsihAxios}
 
     render() {
         if (this.state.redirect) {

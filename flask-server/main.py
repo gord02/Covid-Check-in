@@ -6,7 +6,8 @@ from flask import (Flask, render_template, request)
 from schemas import createNewStore
 from schemas import Store
 from schemas import User
-from schemas import Movie
+# from schemas import Movie
+import json
 # from createSchema import createStore
 
 from mongoengine import connect
@@ -45,18 +46,16 @@ def allStores():
     # Converting mongoengine objects to JSON to be used by axios
     all_stores = Store.objects()
     json_data = all_stores.to_json()
+    print(type(json_data))
     # allows json to be found on this route
     return json_data
-
-
-
 
 # additonal signup sutff, sotre additional name for user
 @app.route("/api/createUser", methods=['POST'])
 def createUser():
     if request.method == 'POST':
         form= request.get_json()
-        print("================this is the request", form,  "---", type(form))
+        # print("================this is the request", form,  "---", type(form))
         name= form['name']
         email= form['email']
         _id= form['firebaseId']
@@ -64,10 +63,16 @@ def createUser():
         user = User(name=name)
         user.email= email
         user._id= _id
-        user.save()
-
-
+        user.save()     
+        # nameJson = eval(nameJs)
+        # print("namejson: ", nameJson, "type: ", type(nameJson))
+    # print("name: ", name)
+    # nameJs= json.dumps(name)
+    # print("namejs: ", nameJs, "type: ", type(nameJs))
     return "ok"
+
+# need to have jason object to bee used by axios for username
+
 #get id from fribase
 
 #make request post to backened to finsh setting up user, username 
@@ -77,9 +82,36 @@ def createUser():
 #post reuqest to pass in firbase id and email and username
 
 #route to get the username 
-@app.route("/api/SignUser")
-def signInUser():
-    return "okay"
+@app.route("/api/getUser")
+def getUser():
+    # db = User.objects({})
+    # db1 = User.objects()
+    # uk_users = User.objects(name='Sassori')
+    # U= uk_users.to_json()
+    # # print("dbs: ", db, db1)
+    # # print("user: ",  uk_users, "type: ", type(uk_users))
+    # print("user: ",  U, "type: ", type(U))
+
+    # if request.method == 'POST':
+    # form= request.get_json()
+    # from= request.d
+    # form= request.data.args
+    form1= request.args
+    # form2= request
+    # form3= request.data.args;
+    # print("================this is the request", form,  "---", type(form))
+    # print("================this is the request", form1,  "---", type(form1))
+    # print("================this is the request", form2,  "---", type(form2)) 
+    Id= form1['firebaseId']
+    print("Id: ", Id, "type: ", type(Id))
+# GO INTO MONGODB, FIND USER
+    currentUser = User.objects(_id=Id)
+    # print("current user var: ", currentUser, "type of: ", type(currentUser))
+    name = currentUser.to_json()
+    print("Name: ", name, "name: ", type(name))
+    # name= currentUser.name
+# GET USER INFORMATION
+    return name
 # Logic is top level (Apps) and the pass it down
 #in fronterd in app firbase logic is cotained, when user is loggged in update state vairble for user id and user name, get request from backend function name: getUserName, then pass vairbles to navbar, axios get request in Apps
 
