@@ -5,7 +5,7 @@ import Login from "./components/Register/login";
 import SignUp from "./components/Register/signup";
 import Logout from "./components/Register/logout";
 import Home from "./components/home";
-import CheckIn from "./components/checkin";
+import CheckIn from "./components/Checkin/checkin";
 import Search from "./components/search";
 // import Map from "./components/map";
 import "./components/Styles/loadingStyles.css"
@@ -15,6 +15,7 @@ import Filter from './components/Search/filter';
 import Map from './components/Search/map';
 import createStore from "./components/Admin/createStore";
 import allStores from "./components/Admin/allStores";
+import Current from "./components/Checkin/current";
 import axios from 'axios';
 // import history from './history';
 // import History  from 'history'
@@ -106,7 +107,9 @@ class Apps extends Component {
                     {/* <Route path="/signup" render={(props) => <SignUp {...props } onSelectLanguage={this.handleLanguage} vars={"dog"}/> }/> */}
                     {/* <Route path="/signup" render={(props) => (<SignUp {...props} handleChange={this.state.handleChange} handleSubmit={this.state.handleSubmit} value={this.state.value} var={"dog"}/> )}/> */}
                     
-                    <Route path="/checkin" component={CheckIn} />
+                    <Route  exact path="/checkin/checkin" component={CheckIn} />
+                    <Route  exact path="/checkin/current" component={Current} />
+                    
                     <Route exact path="/logout" component={Logout} />
 
                     <Route exact path="/search/map" component={Map} />

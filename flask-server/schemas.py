@@ -5,13 +5,19 @@ from mongoengine import StringField, IntField, ListField, Document, connect, Emb
 # connect('cc')
 connect('covid-checkin')
 
+# class Checkin(EmbeddedDocument):
+#     number = IntField(required=True)
+#     userId = IntField(required=True)
+#     storeId = IntField(required=True)
+#     timeIn = DateTimeField(required=True)
+#     timeOut = DateTimeField(required=True)
 
-class Checkin(EmbeddedDocument):
+class Checkin(Document):
     number = IntField(required=True)
-    userId = IntField(required=True)
+    userId = StringField(required=True)
     storeId = IntField(required=True)
-    timeIn = DateTimeField(required=True)
-    timeOut = DateTimeField(required=True)
+    timeIn = StringField(required=True)
+    timeOut = StringField(required=True)
 
 
 class User(Document):
@@ -25,6 +31,7 @@ class Store(Document):
     name = StringField(max_length=50)
     lng = FloatField(required=True, max_length=10)
     lat = FloatField(required=True, max_length=10)
+    _id= IntField(max_length=50)
     # total number of people checkedin incremetd by statsd
     # total = IntField(required=True)
 

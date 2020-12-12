@@ -2,7 +2,6 @@ import React, { Component, useEffect } from "react";
 import { Link } from "react-router-dom";
 import "../Styles/styles.css";
 import axios from 'axios';
-import userNm from "../Register/signup";
 import { app } from "../../firebase";
 
 class Navbar extends Component {
@@ -10,11 +9,8 @@ class Navbar extends Component {
     super(props);
     // allows you to use this inside of function
     this.componentDidUpdate = this.componentDidUpdate.bind(this);
-    // this.onAuthStateChanged = this.onAuthStateChanged.bind(this);
-    // this.auth = this.auth().bind(this);
     this.state = {
       redirect: false,
-      // userNm: ""
       username: ''
     }
   }
@@ -30,6 +26,8 @@ class Navbar extends Component {
         const firebaseId = user.uid; 
         console.log("id: " + firebaseId);
         // console.log("id: " + firebaseId);
+
+        // this sends firebaseid to backend as paramter
         axios.get('/api/getUser', {
           params: {
             firebaseId
@@ -39,42 +37,21 @@ class Navbar extends Component {
           // ============================
           // console.log(response);
           // console.log(response.data);
-          console.log(response.data["0"])
+          // console.log(response.data["0"])
           // ============================
           let object =response.data["0"];
           const username= object.name;
-          // console.log('?????---------?????: ', response.data['name']);
-          // const username= response.data["name"];
-          console.log("username: ", username);
-          // return username;
-
           if (thisKeyword.state.username !== username) {
-            console.log("keyword", thisKeyword.state.username);
-            console.log("keyword2nd", username);
-            console.log("this casenario was triggered!");
+            // console.log("state username: ", thisKeyword.state.username);
+            // console.log("username: ", username);
             thisKeyword.setState({username: username});
           }
-          // thisKeyword.setState({ username: thisKeyword.username});
-
-        
-          // if (thisKeyword.username == userNm) {
-          //   console.log("this casenario was triggered!");
-          //   return;
-          // }
-          // thisKeyword.setState({ userNm: thisKeyword.username});
-          // console.log("this.userNm: ", thisKeyword.userNm)
         });
       }
     });  
   }
 
-  verify() {
-    // if (this.username==)
-  }
   render() {
-    // console.log(this.props.user);
-    // console.log(this.props);
-    // console.log("value: " + this.props.value)
     return (
       <React.Fragment>
         <nav className="navbar sticky-top navbar-expand-lg navbar navbar-dark bg-dark " id="navbar nav">
@@ -83,13 +60,13 @@ class Navbar extends Component {
             <ul className="nav navbar-nav mr-auto">
             </ul>
             <ul className="nav navbar-nav">
-              <Link to="/" className="nav-link"><li>Home</li></Link>
 
               {/* Data that is dependent on authentication */}
               {this.props.authenticated === false
                 ? (
                   // when not autheticated
                   <React.Fragment>
+                    <Link to="/" className="nav-link"><li>Home</li></Link>
                     <Link to="/login" className="nav-link"><li>Login</li></Link>
                     <Link to="/signup" className="nav-link"><li>SignUp</li></Link>
                   </React.Fragment>
@@ -97,20 +74,11 @@ class Navbar extends Component {
                 :
                 // when signed in
                 <React.Fragment>
-                  
                   {this.componentDidUpdate()}
-                  {/* {this.componentDidMount()} */}
-                  {/* {this.setState({username: this.componentDidMount()})} */}
-                  {/* this prevents the inifinte loop that would be created from the calling of the function this. */}
-                  
-                  {/* { useEffect(()=>{  this.componentDidMount()  }, [])  } */}
-                  {/* <li onClick={() => {  this.componentDidMount() }}></li> */}
-                  
-                  {/* <li> Here </li> */}
-                  
-                  <li> {this.state.username}</li>
+                  <li> Signed in user: {this.state.username}</li>
                 {/* <li>{username}</li> */}
-                  <Link to="/checkin" className="nav-link"><li>CheckIn</li></Link>
+                  <Link to="/" className="nav-link"><li>Home</li></Link>
+                  <Link to="/checkin/checkin" className="nav-link"><li>CheckIn</li></Link>
                   <Link to="/search" className="nav-link"><li>Search</li></Link>
                   <Link to="/logout" className="nav-link ">Logout</Link>
                 </React.Fragment>

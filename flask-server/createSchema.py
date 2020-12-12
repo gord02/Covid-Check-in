@@ -13,9 +13,10 @@ print("outside")
 
 def createStore():
     print("inside")
-    store = Store(name="Freshco")
-    store.lat = 33.33
-    store.lng = 33.33
+    store = Store(name="Walmart")
+    store.lat = 33.34
+    store.lng = 34.33
+    store._id= 7
     store.save()
 
 
