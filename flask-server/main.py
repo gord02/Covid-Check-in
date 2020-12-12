@@ -115,7 +115,7 @@ def checkInto():
         checkin.name= storeName
         checkin.storeId= storeId
         checkin.timeIn= timeIn
-        checkin.timeOut= timeIn
+        checkin.timeOut= "0"
         checkin.save()  
     return "ok"
 
@@ -124,7 +124,7 @@ def getCheckinforUser():
     # access database and then print them to page in grid
     form1= request.args
     Id= form1['firebaseId']
-    checkin = Checkin.objects(userId=Id)
+    checkin = Checkin.objects(userId=Id, timeOut="0")
     checkins = checkin.to_json()
         # name = currentUser.to_json()
     return checkins

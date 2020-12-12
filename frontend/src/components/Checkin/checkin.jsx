@@ -48,7 +48,7 @@ class CheckIn extends Component {
                 //     thisKeyword.setState({timeIn: timeIn});
                 // }
                 console.log("timeIn", timeIn, "timeOut", timeOut);
-                if(timeIn === timeOut){
+                if(timeOut === "0"){
                     thisKeyword.setState({storeName: storeName});
                     thisKeyword.setState({timeIn: timeIn});
                     thisKeyword.setState({timeOut: timeOut});
@@ -117,11 +117,11 @@ class CheckIn extends Component {
                         </tbody>
                     </table> */}
 
-                {this.state.timeIn !== this.state.timeOut
+                {'0' !== this.state.timeOut
                 ? (
                   //user is not checked into store
                   <React.Fragment>
-                    <h2> No sotre currently signed into </h2>
+                    <h2> No store currently signed into </h2>
                   </React.Fragment>
                 )
                 :

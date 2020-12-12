@@ -75,7 +75,7 @@ class SearchStore extends Component {
                 // let bool= object["storeName"];
                 // let timeIn= object["timeIn"];
                 // if the current user is still checkined in somewhere the time out will be empty
-                if(object['timeIn'] !== object['timeOut']){
+                if('0' === object['timeOut']){
                     this.setState({statement: true});
                 }
                 // const username= object.name;
