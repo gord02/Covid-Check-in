@@ -104,26 +104,46 @@ def checkInto():
         currentUsersId= form['firebaseId'];
         timeIn= form['time'];
         timeOut= form['time'];
+        storeId= form['storeId'];
 
         obj=form["i"]
         storeName= obj['name'];
-        storeId= obj['_id'];
 
         # create checkin in database
         checkin = Checkin(number=1)
         checkin.userId= currentUsersId
+        checkin.name= storeName
         checkin.storeId= storeId
         checkin.timeIn= timeIn
         checkin.timeOut= timeIn
         checkin.save()  
     return "ok"
 
-@app.route("/search")
-def printAllStores():
-    # displays all stores
+@app.route("/api/checkins")
+def getCheckinforUser():
     # access database and then print them to page in grid
-    # allStores = Store.objects()
-    # return allStores
+    form1= request.args
+    Id= form1['firebaseId']
+    checkin = Checkin.objects(userId=Id)
+    checkins = checkin.to_json()
+        # name = currentUser.to_json()
+    return checkins
+
+@app.route("/api/updateCheckin", methods=['POST'])
+def updateCheckin():
+  if request.method == "POST":
+    #rertiees object of store user signed into
+    form= request.get_json()
+    print("form: ", form)
+    Id= form['firebaseId']
+    timeOut= form['timeOut']
+    checkin = Checkin.objects(userId=Id)
+    checkin.update(set__timeOut=str(timeOut))
+    print("timeout:", str(timeOut), timeOut)
+    # checkins = checkin.to_json()
+        # name = currentUser.to_json()
+    return "ok"
+
 # needed to correctly catch routes
     return "ok"
 @app.route('/', defaults={'path': ''})

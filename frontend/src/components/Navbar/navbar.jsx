@@ -24,7 +24,7 @@ class Navbar extends Component {
         var user = app.auth().currentUser;
         // console.log("user.uid:"+ user.uid);
         const firebaseId = user.uid; 
-        console.log("id: " + firebaseId);
+        // console.log("id: " + firebaseId);
         // console.log("id: " + firebaseId);
 
         // this sends firebaseid to backend as paramter
@@ -75,7 +75,8 @@ class Navbar extends Component {
                 // when signed in
                 <React.Fragment>
                   {this.componentDidUpdate()}
-                  <li> Signed in user: {this.state.username}</li>
+                  <p style={{color: 'white'}}> Signed in user: </p>
+                  <li style={{color: '#4ac6f7'}}> {this.state.username}</li>
                 {/* <li>{username}</li> */}
                   <Link to="/" className="nav-link"><li>Home</li></Link>
                   <Link to="/checkin/checkin" className="nav-link"><li>CheckIn</li></Link>
