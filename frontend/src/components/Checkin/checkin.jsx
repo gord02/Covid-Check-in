@@ -33,7 +33,7 @@ class CheckIn extends Component {
                 // ============================
                 console.log(response);
                 console.log(response.data);
-                console.log(response.data["0"])
+                console.log(response.data["0"]);
                 // ============================
                 let object =response.data["0"];
                 let storeName= object["name"];
@@ -122,6 +122,7 @@ class CheckIn extends Component {
                   //user is not checked into store
                   <React.Fragment>
                     <h2> No store currently signed into </h2>
+                    <Link to="/checkin/history"><button>CheckIn History</button></Link>
                   </React.Fragment>
                 )
                 :
@@ -129,7 +130,11 @@ class CheckIn extends Component {
                 <React.Fragment>
                     <h2> You are currently signed into: {this.state.storeName} </h2>
                     <Link to="/search/searchstore"><button onClick= { () =>this.checkOut()}> Check out?</button></Link>
+                    <div></div>
+                    <Link to="/checkin/history"><button>CheckIn History</button></Link>
+
                 </React.Fragment>
+
 
               }
 

@@ -129,6 +129,19 @@ def getCheckinforUser():
         # name = currentUser.to_json()
     return checkins
 
+@app.route("/api/allCheckins")
+def allCheckins():
+    # access database and then print them to page in grid
+    # print(type(json_data))
+    form1= request.args
+    Id= form1['firebaseId']
+    all_checkin = Checkin.objects(userId=Id)
+    # all_stores = Store.objects()
+    # json_data = all_stores.to_json()
+    checkins = all_checkin.to_json()
+        # name = currentUser.to_json()
+    return checkins
+
 @app.route("/api/updateCheckin", methods=['POST'])
 def updateCheckin():
   if request.method == "POST":
@@ -138,6 +151,7 @@ def updateCheckin():
     Id= form['firebaseId']
     timeOut= form['timeOut']
     checkin = Checkin.objects(userId=Id)
+    # updates timout viarble for doucment  in mongodb using set__VARIBLEINDOUCMENT= str(NEWVARIBLE)
     checkin.update(set__timeOut=str(timeOut))
     print("timeout:", str(timeOut), timeOut)
     # checkins = checkin.to_json()

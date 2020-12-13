@@ -16,6 +16,7 @@ import Map from './components/Search/map';
 import createStore from "./components/Admin/createStore";
 import allStores from "./components/Admin/allStores";
 import Current from "./components/Checkin/current";
+import History from "./components/Checkin/history";
 import axios from 'axios';
 // import history from './history';
 // import History  from 'history'
@@ -109,6 +110,7 @@ class Apps extends Component {
                     
                     <Route  exact path="/checkin/checkin" component={CheckIn} />
                     <Route  exact path="/checkin/current" component={Current} />
+                    <Route  exact path="/checkin/history" component={History} />
                     
                     <Route exact path="/logout" component={Logout} />
 
