@@ -75,8 +75,12 @@ class Navbar extends Component {
                 // when signed in
                 <React.Fragment>
                   {this.componentDidUpdate()}
-                  <p style={{color: 'white'}, {paddingTop :"7px"}}> Signed in user: </p>
-                  <li style={{color: '#4ac6f7'}, {paddingTop :"7px"}}> {this.state.username}</li>
+                  <div style={{paddingRight: '400px', paddingTop :"7px" }}>
+                    {/* , paddingTop :"7px"} */}
+                  <span style={{color: 'white'}}> You are signed in as,   </span>
+                  <span style={{color: '#4ac6f7', fontWeight: "bold"}}> { this.state.username}</span>
+                  </div>
+                
                 {/* <li>{username}</li> */}
                   <Link to="/" className="nav-link"><li>Home</li></Link>
                   <Link to="/checkin/checkin" className="nav-link"><li>CheckIn</li></Link>

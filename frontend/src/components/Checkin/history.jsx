@@ -49,13 +49,31 @@ class History extends Component {
         let stores=this.state.allCheckins;
         return(
            <div>    
+                <h1>All Checkins</h1>
+                <table  style={{ marginBottom: "0px"}} class="table">
+                    <thead class="thead-light">
+                        <tr>
+                            {/* <th scope="col">#</th> */}
+                            <th style={{ width: "494px"}} scope="col">Store Name</th>
+                            <th style={{ width: "468px"}} scope="col">TimeIn</th>
+                            <th scope="col">TimeOut</th>
+                        </tr>
+                    </thead>
+                </table>
+
                {stores.map((i) => (
                     <div> 
-                        <h1>All Checkins</h1>
-                        {i.name}
-                        {/* {this.address(i.lat, i.lng)} */}
-                       {/* <button onClick={ () => this.settingObject(i)}> Check Into</button> */}
-                       {}
+                       
+                        <table class="table">
+                            <tbody>
+                                <tr>
+                                {/* <th scope="row">1</th> */}
+                                <td style={{ width: "494px"}}> {i.name}</td>
+                                <td style={{ width: "468px"}} >{i.timeIn}</td>
+                                <td>{i.timeOut}</td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>)
 
                )}

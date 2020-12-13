@@ -93,6 +93,9 @@ class SearchStore extends Component {
         // ===================
         //  ADDRESS
         // ===================
+        Geocode.setApiKey("AIzaSyDoSD0RfKO_FVMJ9I14kMkTowIkEUJYPyA");
+        Geocode.enableDebug();
+
         Geocode.fromLatLng(lat, lng).then(
             response => {
                 const address = response.results[0].formatted_address;
@@ -113,14 +116,35 @@ class SearchStore extends Component {
         }
         return(
            <div>
-            
+                <table style={{ marginBottom: "0px"}} class="table">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th style={{ width: "323px"}} scope="col">Name</th>
+                            <th style={{ width: "323px"}} scope="col">Location</th>
+                            <th  style={{ width: "333px"}} scope="col">Current Capacity </th>
+                            <th scope="col">Check Into</th>
+                        </tr>
+                    </thead>
+                </table>
                {newList.map((i) => (
                     <div> 
-                        {i.name}
                         {/* {this.address(i.lat, i.lng)} */}
                         
-                        <Link in = {i} to="/checkIn/current"><button onClick={ () => this.settingObject(i)}> Check Into</button>
-                        </Link>
+                        <table class="table">
+                            <tbody>
+                                <tr>
+                                    {/* <th scope="row">1</th> */}
+                                    <td style={{ width: "323px"}}> {i.name}</td>
+                                    <td>Pending</td>
+                                    <td>Pending</td>
+                                    <td>
+                                        <Link in = {i} to="/checkIn/current"><button onClick={ () => this.settingObject(i)}> Check Into</button>
+                                        </Link>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        
                     </div>)
 
                )}
@@ -188,28 +212,27 @@ class SearchStore extends Component {
     render() {
         return (
             <React.Fragment>
-                
-                {/* Data that is dependent on authentication */}
-              {this.state.statement === true
-                ? (
-                  //user is already checked into store
-                  <React.Fragment>
-                    <h4>You are already checked into a store </h4>
-                  </React.Fragment>
-                )
-                :
-                // user is checked into store so they can see stores
-                <React.Fragment>
-                  <form>
-                    <input className="form-control mr-sm-2 container" id="search" type="search" placeholder="Search" aria-label="Search"></input>
-                    <button className="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-                </form>
-                {this.printList()}
-                </React.Fragment>
-
-              }
-                
-               
+                <div className="container">
+                    {/* Data that is dependent on authentication */}
+                    {this.state.statement === true
+                        ? (
+                        //user is already checked into store
+                        <React.Fragment>
+                            <h4>You are already checked into a store </h4>
+                        </React.Fragment>
+                        )
+                        :
+                        // user is checked into store so they can see stores
+                        <React.Fragment>
+                        <form>
+                            <input className="form-control mr-sm-2 container" id="search" type="search" placeholder="Search" aria-label="Search"></input>
+                            <button className="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                        </form>
+                        {this.printList()}
+                        <Link to="/search"><button> Back </button> </Link>
+                        </React.Fragment>
+                    } 
+                </div> 
             </React.Fragment>
         );
     }
