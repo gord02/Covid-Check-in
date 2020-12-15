@@ -11,6 +11,7 @@ class SearchStore extends Component {
         this.componentDidMount = this.componentDidMount.bind(this);
         this.printList = this.printList.bind(this);
         this.address = this.address.bind(this);
+        this.capacityRetriveal = this.capacityRetriveal.bind(this);
         this.state = {
             allStores: [ ],
             List:[],
@@ -18,11 +19,13 @@ class SearchStore extends Component {
             object:[],
             test:"Johnny",
             id:'',
-            statement: false
+            statement: false,
+            countersList:[]
         };
     }
     // this will execute automactically when component is rendered 
     componentDidMount() {
+        this.capacityRetriveal();
         const thisKeyword=this;
         axios.get('/api/stores', {
             // params: {
@@ -49,6 +52,42 @@ class SearchStore extends Component {
             if (thisKeyword.state.allStores !== allStores) {
                 // console.log('yo ',thisKeyword.state.allStores)
                 thisKeyword.setState({allStores : allStores}); 
+            }
+        });
+    }
+
+    capacityRetriveal() {
+        const thisKeyword=this;
+        axios.get('/api/capacityOfStore', {
+            // params: {
+            //   firebaseId
+            // }
+          })
+        .then(function (response) {
+            // ============================
+            // console.log(response);
+            console.log("response:", response.data, "tpyeof: ",typeof(response.data));
+            // console.log(response.data["0"])
+            // ============================
+            const allStoreCapcities =response.data;
+            
+            // allStoreCapcities.forEach(addToList);
+            // Object.keys(allStoreCapcities).forEach(x => countersList.push(x["Capacity"]));
+            // console.log("counterList: ", countersList, typeof(countersList));
+            let countersList=Object.values(allStoreCapcities);
+            console.log("counterList: ", countersList, "type: ", typeof(countersList));
+            // let len= allStoreCapcities.length;
+            // let storeList= [];
+
+            // for(let i=0; i<len; i++) {
+            //     storeList.push(allStoreCapcities[i]);
+            // }
+            // if (thisKeyword.state.List !== storeList) {
+            //     // console.log('yo ',thisKeyword.state.allStoreCapcities)
+            //     thisKeyword.setState({List : storeList});
+            // }
+            if (thisKeyword.state.countersList !== countersList) {
+                thisKeyword.setState({countersList : countersList}); 
             }
         });
     }
@@ -89,28 +128,37 @@ class SearchStore extends Component {
           });  
     }
 
-    address(lat, lng) {
-        // ===================
-        //  ADDRESS
-        // ===================
-        Geocode.setApiKey("AIzaSyDoSD0RfKO_FVMJ9I14kMkTowIkEUJYPyA");
-        Geocode.enableDebug();
+    // address(lat, lng) {
+    //     // ===================
+    //     //  ADDRESS
+    //     // ===================
+    //     Geocode.setApiKey("AIzaSyDoSD0RfKO_FVMJ9I14kMkTowIkEUJYPyA");
+    //     Geocode.enableDebug();
 
-        Geocode.fromLatLng(lat, lng).then(
-            response => {
-                const address = response.results[0].formatted_address;
-                console.log(address);
-                return(address);
-            },
-            error => {
-                console.error(error);
-            },
-        );
-    }
+    //     Geocode.fromLatLng(lat, lng).then(
+    //         response => {
+    //             const address = response.results[0].formatted_address;
+    //             console.log(address);
+    //             return(address);
+    //         },
+    //         error => {
+    //             console.error(error);
+    //         },
+    //     );
+    // }
 
     printList() {
         let stores=this.state.List;
         let newList= [];
+        let countersList= this.state.countersList;
+        let List=[]
+        let len= this.state.countersList.length;
+        console.log("len: ", len)
+        for(let i=0; i<len;i++) {
+            List.push(countersList[i].number);
+        }
+        console.log("List: ", List, typeof(List));
+ 
         for(let i=0; i<stores.length; i++) {
             newList.push(stores[i]);
         }
@@ -126,7 +174,7 @@ class SearchStore extends Component {
                         </tr>
                     </thead>
                 </table>
-               {newList.map((i) => (
+               {newList.map((i, x) => (
                     <div> 
                         {/* {this.address(i.lat, i.lng)} */}
                         
@@ -136,7 +184,7 @@ class SearchStore extends Component {
                                     {/* <th scope="row">1</th> */}
                                     <td style={{ width: "323px"}}> {i.name}</td>
                                     <td style={{ width: "323px"}}>Pending</td>
-                                    <td style={{ width: "323px"}}>Pending</td>
+                                    <td style={{ width: "323px"}}>{List[x]}</td>
                                     <td>
                                         <Link in = {i} to="/checkIn/current"><button style={{ marginLeft: "6px"}} onClick={ () => this.settingObject(i)}> Check Into</button>
                                         </Link>
@@ -176,7 +224,7 @@ class SearchStore extends Component {
                 let storeId= i['_id'].$oid;
                 // console.log(storeId);
                 // let aSynced = async () => {   
-                // console.log("firebaseId: ", firebaseId); 
+                console.log("firebaseId: ", firebaseId); 
                 // };
                 // aSynced().then(() =>  console.log("dine"), thisKeyword.setState({id: firebaseId}));
                 axios({
@@ -192,21 +240,6 @@ class SearchStore extends Component {
                 });  
             }
           });  
-        // console.log("fid: ", fid)
-        // let ted= this.state.test;
-        // this.setState({test: "firebaseId"}, () => {
-        //     console.log("ted: ", this.state.test);
-        // }); 
-        // let aSynceds = async () => {    thisKeyword.setState({test: "firebaseId"}); console.log("dine");  };
-        // aSynceds().then(() =>  console.log(ted));
-        // let id='';
-        // let obj=[];
-        // let aSynced = async () => {   
-        // let id=  this.state.id; //!!!!!!!!!EMPTY
-        // let obj= this.state.object; 
-        // console.log("rertived");
-        // };
-       
     }
 
     render() {
