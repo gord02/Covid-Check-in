@@ -19,5 +19,10 @@ def createStore():
     # store._id= 7
     store.save()
 
+# def createCounter():
+    # counter = Counter(number= 0)
+    # counter.storeId= 
+    # counter.save()  
 
-createStore()
+# createStore()
+# createCounter()

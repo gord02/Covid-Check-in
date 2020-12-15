@@ -7,6 +7,8 @@ from schemas import createNewStore
 from schemas import Store
 from schemas import User
 from schemas import Checkin
+from schemas import Counter
+
 # from schemas import Movie
 import json
 # from createSchema import createStore
@@ -31,14 +33,50 @@ def newStore():
 @app.route("/api/newstore", methods=["POST"])
 def newStorePost():
     if request.method == "POST":
+        # form= request.get_json()
+        # print("form: ", request.form, "form: ", request.get_json())
         storeName = request.form["storeName"]
         storeLng = float(request.form["storeLng"])
         storeLat = float(request.form["storeLat"])
+        print("store name", storeName, type(storeName))
+        name= storeName
         # print(storeLng)
         # print(storeLat)
+   
         createNewStore(storeName=storeName,
                        storeLng=storeLng, storeLat=storeLat)
+
+        store = Store.objects(storeLng= storeLng,storeLat=storeLat)
+        store = Store.objects(name=name)
+        
+        # id=store._id
+        # print("this is id?: ",id);
+        # print(store)
+        # user1 = Subject.objects.get(id=1)
+
+        # converts to mongoengine to json object
+
+        storeObj = Store.objects.get(name=storeName,lng=storeLng, lat=storeLat)
+        # checkinObj = Store.objects.get(storeId=storeId)
+        obj= storeObj.to_json()
+        new = json.loads(obj)
+        print("new: ", new["_id"],"type:", type(new))
+        Dict= new["_id"]
+        id= Dict['$oid']
+        print("id: ", id)
+        # id = json.loads(new)
+        # print("id: ", id["$oid"])
+
+
+        # storeId=obj.name()
+        # print(storeId)
+        
+        counter = Counter(number= 0)
+        counter.storeId= id
+        counter.save()  
+
         return render_template("index.html")
+       
         # return render_template("home.html")
 
 
@@ -117,6 +155,16 @@ def checkInto():
         checkin.timeIn= timeIn
         checkin.timeOut= "0"
         checkin.save()  
+
+        counter = Counter.objects(storeId=storeId)
+        obj= counter.to_json()
+        new = json.loads(obj)
+        print("new: ", new, type(new))
+        new1= new[0]
+        number= new1["number"]
+        print("number: ", number)
+        updated= number+1
+        counter.update(set__number=str(updated))
     return "ok"
 
 @app.route("/api/checkins")
@@ -150,13 +198,61 @@ def updateCheckin():
     print("form: ", form)
     Id= form['firebaseId']
     timeOut= form['timeOut']
-    checkin = Checkin.objects(userId=Id)
+    checkin = Checkin.objects(userId=Id, timeOut="0")
+    # checkinObj = Checkin.objects.get(storeId=storeId)
+    obj= checkin.to_json()
+    new = json.loads(obj)
+    print("new: ", new, type(new))
+    new1= new[0]
+    storeId= new1["storeId"]
+    print("storeId: ", storeId)
+    # Dict= new["storeId"]
+    # id= Dict['$oid']
+    # print("id: ", id)
+    # res = obj.split()
+    # print("res: ", res)
+    # storeId= res[2]
+    # id1= storeId.replace('"', '')
+    # id2= id1.replace('}', '')
+    # newId= id2.replace(',', '')
+    # print(newId)
     # updates timout viarble for doucment  in mongodb using set__VARIBLEINDOUCMENT= str(NEWVARIBLE)
     checkin.update(set__timeOut=str(timeOut))
     print("timeout:", str(timeOut), timeOut)
+
+    # print("storedId: ", storeId)
+
+    counter = Counter.objects(storeId=storeId)
+    obj= counter.to_json()
+    new = json.loads(obj)
+    print("new: ", new, type(new))
+    new1= new[0]
+    number= new1["number"]
+    print("number: ", number)
+    updated= number-1
+    counter.update(set__number=str(updated))
+    
+
+
+    # checkin = Checkin.objects(userId=Id)
     # checkins = checkin.to_json()
         # name = currentUser.to_json()
     return "ok"
+
+@app.route("/api/updateCheck", methods=['POST'])
+def addingToStore():
+  if request.method == "POST":
+    form= request.get_json()
+    print("form: ", form)
+    Id= form['firebaseId']
+    checkin = Checkin.objects(userId=Id)
+    counter = Counter.objects()
+    checkin.update(set__counter=(counter+ 1))
+    #rertiees object of store user signed into
+    # create counter for mongodb datatbase
+
+    # form= request.get_json()
+    # print("form: ", form)
 
 # needed to correctly catch routes
     return "ok"

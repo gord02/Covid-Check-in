@@ -36,6 +36,10 @@ class Store(Document):
     # total number of people checkedin incremetd by statsd
     # total = IntField(required=True)
 
+class Counter(Document):
+    number= IntField(required=True, max_length=10)
+    storeId= StringField(required=True, max_length=50)
+    
 
 def createNewStore(storeName, storeLng, storeLat):
     # store = Store(name="Tim Hortons")

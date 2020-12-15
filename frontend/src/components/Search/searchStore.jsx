@@ -135,10 +135,10 @@ class SearchStore extends Component {
                                 <tr>
                                     {/* <th scope="row">1</th> */}
                                     <td style={{ width: "323px"}}> {i.name}</td>
-                                    <td>Pending</td>
-                                    <td>Pending</td>
+                                    <td style={{ width: "323px"}}>Pending</td>
+                                    <td style={{ width: "323px"}}>Pending</td>
                                     <td>
-                                        <Link in = {i} to="/checkIn/current"><button onClick={ () => this.settingObject(i)}> Check Into</button>
+                                        <Link in = {i} to="/checkIn/current"><button style={{ marginLeft: "6px"}} onClick={ () => this.settingObject(i)}> Check Into</button>
                                         </Link>
                                     </td>
                                 </tr>

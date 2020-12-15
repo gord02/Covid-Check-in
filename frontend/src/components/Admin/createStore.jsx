@@ -2,12 +2,14 @@ import React, { Component } from 'react'
 
 class createStore extends Component {
 
+    
+
     render() {
         return (
             <div className="createStore container">
                 <h1>Add Store</h1>
                 {/*  onSubmit={(event) => { this.authEmailPassword(event) }} ref={(form) => { this.loginForm = form }}  */}
-                <form method="POST" action="/admin/newstore">
+                <form method="POST" action="/api/newstore" >
                     <div className="form-group">
                         <label htmlFor="exampleInputEmail1">Store/Location Name</label>
                         {/* ref={(input) => { this.emailInput = input }} */}

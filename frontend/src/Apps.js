@@ -118,7 +118,7 @@ class Apps extends Component {
                     <Route exact path="/search/filter" component={Filter} />
                     <Route exact path="/search/searchstore" component={SearchStore} />
                     <Route path="/search" component={Search} />
-                    <Route path="/admin/newstore" component={createStore} />
+                    <Route path="/api/newstore" component={createStore} />
                     <Route path="/admin/stores" component={allStores} />
 
 
