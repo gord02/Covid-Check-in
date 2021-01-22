@@ -13,6 +13,7 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import SearchStore from './components/Search/searchStore';
 import Filter from './components/Search/filter';
 import Map from './components/Search/map';
+import initMaps from './components/Search/newMap';
 import createStore from "./components/Admin/createStore";
 import allStores from "./components/Admin/allStores";
 import Current from "./components/Checkin/current";
@@ -67,7 +68,6 @@ class Apps extends Component {
         this.removeAuthListener();
     }
 
-
     handleLanguage = (name) => {
         this.setState({username: name});
     }
@@ -115,6 +115,7 @@ class Apps extends Component {
                     <Route exact path="/logout" component={Logout} />
 
                     <Route exact path="/search/map" component={Map} />
+                    <Route exact path="/search/newMap" component={initMaps} />
                     <Route exact path="/search/filter" component={Filter} />
                     <Route exact path="/search/searchstore" component={SearchStore} />
                     <Route path="/search" component={Search} />

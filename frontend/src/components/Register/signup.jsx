@@ -113,8 +113,6 @@ class SignUp extends Component {
                         </div>
                     </form>
                 </div>   
-                <div>
-                </div>
             </React.Fragment>
             );
     }

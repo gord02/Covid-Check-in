@@ -10,7 +10,7 @@ class SearchStore extends Component {
         super(props);
         this.componentDidMount = this.componentDidMount.bind(this);
         this.printList = this.printList.bind(this);
-        this.address = this.address.bind(this);
+        // this.address = this.address.bind(this);
         this.capacityRetriveal = this.capacityRetriveal.bind(this);
         this.state = {
             allStores: [ ],
@@ -19,13 +19,14 @@ class SearchStore extends Component {
             object:[],
             test:"Johnny",
             id:'',
-            statement: false,
+            isCheckedIn: true,
             countersList:[]
         };
     }
     // this will execute automactically when component is rendered 
     componentDidMount() {
         this.capacityRetriveal();
+        this.isCheckedIn();
         const thisKeyword=this;
         axios.get('/api/stores', {
             // params: {
@@ -93,6 +94,7 @@ class SearchStore extends Component {
     }
 
     isCheckedIn() {
+        let thisKeyword= this;
         app.auth().onAuthStateChanged(function(user) {
             if (user) {
               var user = app.auth().currentUser;
@@ -108,14 +110,21 @@ class SearchStore extends Component {
                 // ============================
                 console.log(response);
                 console.log(response.data);
-                console.log(response.data["0"])
                 // ============================
-                let object =response.data["0"];
+                let object =response.data;
+                console.log("object type: ",typeof(object))
                 // let bool= object["storeName"];
                 // let timeIn= object["timeIn"];
                 // if the current user is still checkined in somewhere the time out will be empty
-                if('0' === object['timeOut']){
-                    this.setState({statement: true});
+                // if('0' === object['timeOut']){
+                //     this.setState({isCheckedIn: true});
+                // }
+
+                if(object === '[]') {
+                    console.log("it is ");
+                }
+                if(object.length ===0){
+                    thisKeyword.setState({isCheckedIn: false});
                 }
                 // const username= object.name;
                 // if (thisKeyword.state.username !== username) {
@@ -186,7 +195,7 @@ class SearchStore extends Component {
                                     <td style={{ width: "323px"}}>Pending</td>
                                     <td style={{ width: "323px"}}>{List[x]}</td>
                                     <td>
-                                        <Link in = {i} to="/checkIn/current"><button style={{ marginLeft: "6px"}} onClick={ () => this.settingObject(i)}> Check Into</button>
+                                        <Link in = {i} to="/checkin/checkin"><button style={{ marginLeft: "6px"}} onClick={ () => this.settingObject(i)}> Check Into</button>
                                         </Link>
                                     </td>
                                 </tr>
@@ -214,6 +223,7 @@ class SearchStore extends Component {
 
     createChechkin(i) {
         const thisKeyword =this;
+        console.log("Printed?");
         // let fid= '';
         app.auth().onAuthStateChanged(function(user) {
             if (user) {
@@ -224,7 +234,7 @@ class SearchStore extends Component {
                 let storeId= i['_id'].$oid;
                 // console.log(storeId);
                 // let aSynced = async () => {   
-                console.log("firebaseId: ", firebaseId); 
+                // console.log("firebaseId: ", firebaseId); 
                 // };
                 // aSynced().then(() =>  console.log("dine"), thisKeyword.setState({id: firebaseId}));
                 axios({
@@ -247,23 +257,24 @@ class SearchStore extends Component {
             <React.Fragment>
                 <div className="container">
                     {/* Data that is dependent on authentication */}
-                    {this.state.statement === true
+                    {this.state.isCheckedIn
                         ? (
-                        //user is already checked into store
+                        // user is checked into store so they cannot see stores
                         <React.Fragment>
                             <h4>You are already checked into a store </h4>
                         </React.Fragment>
                         )
                         :
-                        // user is checked into store so they can see stores
+                        //user is not checked into store therefore can select a new one
                         <React.Fragment>
-                        <form>
-                            <input className="form-control mr-sm-2 container" id="search" type="search" placeholder="Search" aria-label="Search"></input>
-                            <button className="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-                        </form>
-                        {this.printList()}
-                        <Link to="/search"><button> Back </button> </Link>
+                            <form>
+                                <input className="form-control mr-sm-2 container" id="search" type="search" placeholder="Search" aria-label="Search"></input>
+                                <button className="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                            </form>
+                            {this.printList()}
+                            <Link to="/search"><button> Back </button> </Link>
                         </React.Fragment>
+                    
                     } 
                 </div> 
             </React.Fragment>

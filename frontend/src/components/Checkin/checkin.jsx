@@ -121,8 +121,10 @@ class CheckIn extends Component {
                 ? (
                   //user is not checked into store
                   <React.Fragment>
-                    <h2> No store currently signed into </h2>
-                    <Link to="/checkin/history"><button>CheckIn History</button></Link>
+                        <div className="container">
+                            <h2> No store currently signed into </h2>
+                            <Link to="/checkin/history"><button>CheckIn History</button></Link>
+                        </div>
                   </React.Fragment>
                 )
                 :
@@ -130,7 +132,7 @@ class CheckIn extends Component {
                 <React.Fragment>
                   <div className="container">
                     <h2> You are currently signed into: {this.state.storeName} </h2>
-                    <Link to="/search/searchstore"><button onClick= { () =>this.checkOut()}> Check out?</button></Link>
+                    <Link to="/checkin/checkin"><button onClick= { () =>this.checkOut()}> Check out?</button></Link>
                     <div></div>
                     <Link to="/checkin/history"><button>CheckIn History</button></Link>
                   </div>
