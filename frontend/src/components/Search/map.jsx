@@ -1,7 +1,7 @@
 // In order to make google.maps.LatLng visible it’s necessary to add this line of code at the top of the file:
 /* global google */
 import React, { Component } from 'react';
-import { Map, GoogleApiWrapper } from 'google-maps-react';
+import { Map, GoogleApiWrapper, InfoWindow, Marker } from 'google-maps-react';
 
 const mapStyles = {
     width: '80%',
@@ -49,7 +49,6 @@ class MapContainer extends Component {
                             lat: this.state.theLat,
                             lng: this.state.theLng
                         }} 
-                         
                     />
                 </div>
             </React.Fragment>

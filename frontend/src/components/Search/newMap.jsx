@@ -8,21 +8,20 @@ const LoadingContainer = (props) => (
 
 // import HeatmapLayer from "react-google-maps/lib/visualization/HeatmapLayer";
 
-
-
 const mapStyles = {
     width: '100%',
     height: '100%'
 };
-// const [selectedCenter, setSelectedCenter] = useState(null);
-
 
 class SimpleMap extends React.Component { 
     constructor() {
         super();
+        this.onInfoWindowClose = this.onInfoWindowClose.bind(this);
         this.state = {
             markers: [],
-            mouseIsOver : false
+            mouseIsOver : false,
+            clicked: false,
+            stores: []
         };
     };
     
@@ -33,6 +32,26 @@ class SimpleMap extends React.Component {
         },
         zoom: 11
     };
+    componentDidMount() {
+        axios.get('/api/stores')
+          .then(res => {
+            // sets array of JSON objects to the vairble name stores
+            const stores = res.data;
+            // console.log(stores);
+            // console.log( typeof stores);
+            this.setState({ stores });
+        })
+    }
+
+    getCounters() {
+
+    }
+
+    onInfoWindowClose() {
+        if(this.state.clicked === true) {
+            this.setState({ clicked : false});
+        }
+    }
 
     render() {
         return (
@@ -60,55 +79,21 @@ class SimpleMap extends React.Component {
                         // gradient = [ "rgba(0, 255, 255, 0)"];
                   }}}  
             >
-                   
-            <Marker  key={2} 
-            title={'The marker`s title will appear as a tooltip.'}
-            name={'SOMA'}
-            position={{lat: 59.955413, lng: 30.337844}} />
-
-            {/* <Marker  key={3}  onMouseover={this.onMouseoverMarker}
-                name={'Current location'} /> */}
-
-            <Marker  
-                key={4} 
-                // onClick={this.onMarkerClick}
-                name={'Current location'}  position={{lat: 59.955413, lng: 30.337844}} 
-                onMouseover={() => {
-                    // console.log("mouse over");
-                    if(this.state.mouseIsOver===false) { 
-                        this.setState({ mouseIsOver : true});
-                    }
-                    return (
-                        <React.Fragment>
-                            <h1>"hello world"</h1>
-
-                        {console.log("here2")}
-                        <InfoWindow visible={true} onOpen={() => {console.log("opened")}} position={{lat: 60.055413, lng: 30.337844}} maxWidth="200">
-                            <h1>"hello world"</h1>
-                        </InfoWindow>
-                    </React.Fragment>
-                    );
-                }}
-            />
-        {/* {this.state.mouseIsOver === true 
-            ?
-                <React.Fragment>
-                    {console.log("here")}
-                    <InfoWindow position={{lat: 59.955413, lng: 30.337844}} >
-                        <div>
-                            <h1>"hello world"</h1>
-                        </div>
-                    </InfoWindow>
-                </React.Fragment>
-               
-            :   <p></p>
-        } */}
-        <InfoWindow visible={true} onClose={this.onInfoWindowClose}>
-            <div>
-              <h1>"hello world"</h1>
-            </div>
-        </InfoWindow>
-               
+                {/* { this.state.stores.map((store, i) =>  <li>{store.name}</li>)} */}
+                <Marker  
+                    key={i} 
+                    name={'Current location'} position={{lat: 59.955413, lng: 30.337844}} 
+                    onClick={() => {
+                        if(this.state.clicked === false) { 
+                            this.setState({ clicked : true});
+                        }
+                    }}
+                />
+                <InfoWindow visible={this.state.clicked} position={{lat: 59.955413, lng: 30.337844}} onClose={this.onInfoWindowClose}>
+                    <div>
+                        <h1>"hello world !!!"</h1>
+                    </div>
+                </InfoWindow>        
             </Map>
          </div>
         );
@@ -119,112 +104,3 @@ export default GoogleApiWrapper({
     LoadingContainer: LoadingContainer
 })(SimpleMap);
  
-// export default SimpleMap;
-
-// import {React, Component, useState} from "react";
-// import { Map, withScriptjs, withGoogleMap, GoogleMap, Marker, InfoWindow } from "google-maps-react";
-
-
-// class MapContainer extends Component {
-//     constructor() {
-//         super();
-//         this.state = {
-//             name: "Brampton City Center",
-//             theLat: 43.716589,
-//             theLng: -79.723921,
-//             searchInput: 0
-//         };
-//     };
-
-// // let Map = withScriptjs(withGoogleMap((props) =>{
-//     // const [selectedCenter, setSelectedCenter] = useState(null);
-//     // const recycleCenters = props.recycleCenters 
-//     render() {
-//     return (       
-//         // <Map zoom={4.5} center={ { lat:  39.6693, lng: -98.3476 } }>  
-
-//         // {/* {recycleCenters.map(center => (             */}
-//         //     <Marker                               
-//         //         position={{                     
-//     //                 lat:59.955413,
-//     //                 lng:30.337844             
-//     //             }}
-//     //             // onClick={() => {
-//     //             //     setSelectedCenter({ lat:  59.955413, lng: 30.337844 });
-//     //             // }}
-//     //         />        
-//     //         {/* ))}; */}
-//     //         {/* {selectedCenter && ( */}
-//     //         <InfoWindow
-//     //             // onCloseClick={() => {
-//     //             //     setSelectedCenter(null);
-//     //             // }}
-//     //             position={{
-//     //                 lat:59.955413,
-//     //                 lng:30.337844 
-//     //             }}
-//     //         >
-//     //         </InfoWindow>
-
-//     //         <Map google={this.props.google} zoom={14}>
-//     //             <Marker onClick={this.onMarkerClick}
-//     //                     name={'Current location'} />
-
-//     //             <InfoWindow onClose={this.onInfoWindowClose}>
-//     //                 <div>
-//     //                 <h1>{this.state.selectedPlace.name}</h1>
-//     //                 </div>
-//     //             </InfoWindow>
-//     //         </Map>
-//     //         {/* )} */}
-//     //    </Map>
-//     <Map google={this.props.google} zoom={14}>
- 
-//     <Marker onClick={this.onMarkerClick}
-//             name={'Current location'} />
-
-//     <InfoWindow onClose={this.onInfoWindowClose}>
-//         <div>
-//           <h1>{this.state.selectedPlace.name}</h1>
-//         </div>
-//     </InfoWindow>
-//   </Map>
-//     );
-
-//     }
-// // }))
-// }
-// ==============
-// import {Map, InfoWindow, Marker, GoogleApiWrapper} from 'google-maps-react';
-
-// const mapStyles = {
-//     width: '80%',
-//     height: '70%'
-// };
-// export class MapContainer extends Component {
-//     render() {
-//       return (
-//         <Map google={this.props.google} zoom={14} styles={{mapStyles}}
-//         initialCenter={{
-//             lat: this.state.theLat,
-//             lng: this.state.theLng
-//         }} 
-//         >
-   
-//           {/* <Marker onClick={this.onMarkerClick}
-//                   name={'Current location'} />
-   
-//           <InfoWindow onClose={this.onInfoWindowClose}>
-//               <div>
-//                 <h1>{this.state.selectedPlace.name}</h1>
-//               </div>
-//           </InfoWindow> */}
-//         </Map>
-//       );
-//     }
-// }
-// export default GoogleApiWrapper({
-//     apiKey: 'AIzaSyDoSD0RfKO_FVMJ9I14kMkTowIkEUJYPyA'
-// })(MapContainer);
-
-// // export default MapContainer;
