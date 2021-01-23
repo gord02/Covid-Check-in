@@ -1,5 +1,6 @@
 
 import React, { Component, setState } from 'react';
+import axios from 'axios';
 import { Map, GoogleMapReact, GoogleApiWrapper, google, map, HeatMapLayer, InfoWindow, visualization, Marker } from 'google-maps-react';
 
 const LoadingContainer = (props) => (
@@ -21,17 +22,23 @@ class SimpleMap extends React.Component {
             markers: [],
             mouseIsOver : false,
             clicked: false,
-            stores: []
+            stores: [],
+            index: 0,
+            areas: [
+                {lat: 43.716589,lng: -79.723921},
+                {lat: 43.683334, lng: -79.766670},
+                {lat: 43.7076, lng: -79.7857}
+            ]    
         };
     };
     
-    static defaultProps = {
-        center: {
-        lat: 59.95,
-        lng: 30.33
-        },
-        zoom: 11
-    };
+    // static defaultProps = {
+    //     center: {
+    //         theLat: 43.716589,
+    //         theLng: -79.723921,
+    //     },
+    //     zoom: 11
+    // };
     componentDidMount() {
         axios.get('/api/stores')
           .then(res => {
@@ -62,8 +69,8 @@ class SimpleMap extends React.Component {
               bootstrapURLKeys={{ key: 'AIzaSyDoSD0RfKO_FVMJ9I14kMkTowIkEUJYPyA'}}
               style={mapStyles}
               initialCenter={{
-                lat: 59.95,
-                lng: 30.33
+                lat: 43.716589,
+                lng: -79.723921,
               }} 
             //   defaultCenter={this.props.center}
             //   defaultZoom={this.props.zoom}
@@ -79,21 +86,44 @@ class SimpleMap extends React.Component {
                         // gradient = [ "rgba(0, 255, 255, 0)"];
                   }}}  
             >
-                {/* { this.state.stores.map((store, i) =>  <li>{store.name}</li>)} */}
-                <Marker  
-                    key={i} 
-                    name={'Current location'} position={{lat: 59.955413, lng: 30.337844}} 
-                    onClick={() => {
-                        if(this.state.clicked === false) { 
-                            this.setState({ clicked : true});
-                        }
-                    }}
-                />
-                <InfoWindow visible={this.state.clicked} position={{lat: 59.955413, lng: 30.337844}} onClose={this.onInfoWindowClose}>
-                    <div>
-                        <h1>"hello world !!!"</h1>
-                    </div>
-                </InfoWindow>        
+                {/* { this.state.stores.map((store, i) => 
+                <div>
+                    <Marker  
+                        key={i} 
+                        position={{lat: store.lat, lng: store.lng}} 
+                        onClick={() => {
+                            if(this.state.clicked === false) { 
+                                this.setState({ clicked : true});
+                            }
+                        }}
+                    />
+                </div>
+                )}    */}
+                { this.state.areas.map((store, i) => 
+                // <div>
+                    <Marker  
+                        key={i} 
+                        position={{lat: this.state.areas[i].lat, lng: this.state.areas[i].lng}} 
+                        onClick={() => {
+                            if(this.state.clicked === false) { 
+                                this.setState({ clicked : true});
+                            }
+                        }}
+                    />
+                // </div> 
+                )}  
+                {console.log(this.state.areas[0].lat)}
+                { this.state.areas.map((store, i) => 
+                    <InfoWindow 
+                        visible={this.state.clicked} 
+                        position={{lat:  this.state.areas[i].lat, lng:  this.state.areas[i].lng}} 
+                        onClose={this.onInfoWindowClose}>
+                        <div>
+                            <h1>"hello world !!!"</h1>
+                        </div>
+                    </InfoWindow>   
+                )}  
+
             </Map>
          </div>
         );
