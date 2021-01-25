@@ -126,15 +126,19 @@ class SimpleMap extends React.Component {
                                     return { areas };                                 // return new object areas object
                                 }, () => {});
                             }
-                        }}
+                            else{
+                                this.onInfoWindowClose();
+                            }
+                        }}  
                     />
                 )}  
+                
                     <InfoWindow 
                         visible={this.state.areas[this.state.index].clicked} 
-                        position={{lat:  this.state.areas[this.state.index].lat, lng:  this.state.areas[this.state.index].lng}} 
+                        position={{lat:  (this.state.areas[this.state.index].lat + 0.002), lng: this.state.areas[this.state.index].lng}} 
                         onClose={this.onInfoWindowClose}>
                         <div>
-                            <h1>"hello world!!!"</h1>
+                            <p>"hello world!!!"</p>
                         </div>
                     </InfoWindow>   
                 {/* )}   */}
