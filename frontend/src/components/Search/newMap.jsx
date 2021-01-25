@@ -21,13 +21,13 @@ class SimpleMap extends React.Component {
         this.state = {
             markers: [],
             mouseIsOver : false,
-            clicked: false,
+            // clicked: false,
             stores: [],
             index: 0,
             areas: [
-                {lat: 43.716589,lng: -79.723921},
-                {lat: 43.683334, lng: -79.766670},
-                {lat: 43.7076, lng: -79.7857}
+                {lat: 43.716589,lng: -79.723921, clicked: false},
+                {lat: 43.683334, lng: -79.766670, clicked: false},
+                {lat: 43.7076, lng: -79.7857,  clicked: false}
             ]    
         };
     };
@@ -49,14 +49,27 @@ class SimpleMap extends React.Component {
             this.setState({ stores });
         })
     }
-
+    componentDidUpdate() {
+        // console.log(this.state.areas);
+        // for (const lat in areas) {
+        //     console.log(`${lat}: ${areas[lat]}`);
+        // }
+        // this.setState({})
+    }
     getCounters() {
 
     }
 
     onInfoWindowClose() {
-        if(this.state.clicked === true) {
-            this.setState({ clicked : false});
+        // console.log(this);
+        let index = this.state.index;
+        if(this.state.areas[index].clicked === true) {
+            // this.setState({ clicked : false});
+            this.setState(prevState => {
+                let areas = Object.assign({}, prevState.areas);  // creating copy of state variable areas
+                areas[index].clicked = false;                     // update the name property, assign a new value                 
+                return { areas };                                 // return new object areas object
+            });
         }
     }
 
@@ -99,30 +112,32 @@ class SimpleMap extends React.Component {
                     />
                 </div>
                 )}    */}
-                { this.state.areas.map((store, i) => 
-                // <div>
+                { Object.keys(this.state.areas).map((store, i) => 
                     <Marker  
                         key={i} 
                         position={{lat: this.state.areas[i].lat, lng: this.state.areas[i].lng}} 
                         onClick={() => {
-                            if(this.state.clicked === false) { 
-                                this.setState({ clicked : true});
+                            this.setState({index: i}, () => {});
+                            if(this.state.areas[i].clicked === false) { 
+                                // this.setState({ clicked : true});
+                                this.setState(prevState => {
+                                    let areas = Object.assign({}, prevState.areas);  // creating copy of state variable areas
+                                    areas[i].clicked = true;                     // update the name property, assign a new value 
+                                    return { areas };                                 // return new object areas object
+                                }, () => {});
                             }
                         }}
                     />
-                // </div> 
                 )}  
-                {console.log(this.state.areas[0].lat)}
-                { this.state.areas.map((store, i) => 
                     <InfoWindow 
-                        visible={this.state.clicked} 
-                        position={{lat:  this.state.areas[i].lat, lng:  this.state.areas[i].lng}} 
+                        visible={this.state.areas[this.state.index].clicked} 
+                        position={{lat:  this.state.areas[this.state.index].lat, lng:  this.state.areas[this.state.index].lng}} 
                         onClose={this.onInfoWindowClose}>
                         <div>
-                            <h1>"hello world !!!"</h1>
+                            <h1>"hello world!!!"</h1>
                         </div>
                     </InfoWindow>   
-                )}  
+                {/* )}   */}
 
             </Map>
          </div>
