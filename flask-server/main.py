@@ -1,13 +1,21 @@
 import mongoengine
 from flask import (Flask, render_template, request)
 
+# from setup import .
 from schemas import createNewStore
 from schemas import Store
 from schemas import User
 from schemas import Checkin
-from schemas import Counter
+# from schemas import Counter
 
 import json
+import statsd
+from statsd import StatsClient
+# count = statsd.StatsClient('localhost', 8125)
+statsd = StatsClient()
+
+# from statsd import StatsdClient
+# statsd.init_statsd({'STATSD_BUCKET_PREFIX': 'counters'})
 
 from mongoengine import connect
 # allows use to add to the database in mongoDB called covid-checkin
@@ -32,9 +40,9 @@ def newStorePost():
         print("store name", storeName, type(storeName))
         name= storeName
    
-        createNewStore(storeName=storeName,storeLng=storeLng, storeLat=storeLat)
+        createNewStore(storeName=storeName,storeLng=storeLng, storeLat=storeLat, capacity=0)
         store = Store.objects(storeLng= storeLng,storeLat=storeLat)
-        store = Store.objects(name=name)
+        # store = Store.objects(name=name)
         
         # converts to mongoengine to json object
         storeObj = Store.objects.get(name=storeName,lng=storeLng, lat=storeLat)
@@ -46,9 +54,21 @@ def newStorePost():
         print("id: ", id)
 
         # Creates counter for each store for when user checkins into that store
-        counter = Counter(number= 0)
-        counter.storeId= id
-        counter.save()  
+
+        # statsdCounter = statsd.Counter('Statsd_Tutorial_Application')
+        # counter = Counter(number= statsdCounter)
+
+        # counter.number= statsdCounter.incr
+
+        # counter = statsd.StatsdCounter('processed')
+
+        # counter = Counter(number= statsd.StatsdCounter(id))
+        # counter.storeId= id
+        # counter.save()  
+        statsd = StatsClient()
+
+        statsd.incr('some.event')
+        
 
         return render_template("index.html")
 
@@ -58,10 +78,10 @@ def allStores():
     all_stores = Store.objects()
     json_data = all_stores.to_json()
     print(type(json_data))
-    # allows json datd to be found on this route
+    # allows json data to be found on this route
     return json_data
 
-# additonal signup sutff, sotre additional name for user
+# additional signup sutff, store additional name for user
 @app.route("/api/createUser", methods=['POST'])
 def createUser():
     if request.method == 'POST':
@@ -122,15 +142,29 @@ def checkInto():
         checkin.save()  
 
         # updates counter to reflect the recently checkedin user 
-        counter = Counter.objects(storeId=storeId)
-        obj= counter.to_json()
-        new = json.loads(obj)
-        print("new: ", new, type(new))
-        new1= new[0]
-        number= new1["number"]
-        print("number: ", number)
-        updated= number+1
-        counter.update(set__number=str(updated))
+        store = Store.objects(id=storeId)
+        print(store)
+        # obj= counter.to_json()
+        # new = json.loads(obj)
+        # print("new: ", new, type(new))
+        # new1= new[0]
+        # number= new1["number"]
+        # print("number: ", number)
+
+
+# =====================
+
+        counter = statsd.Counter('store.' + storeId)
+        # stat= statsd.incr('store.'+storeId)
+        # value= statsd('store.'+storeId)
+        # c= statsd.count('store.'+storeId)
+
+        print("counter: ", counter)
+        return
+        updated= statsd.incr('store.'+storeId)
+
+        # updated= number+1
+        store.update(set__capacity=(updated))
     return "ok"
 
 @app.route("/api/checkins")
@@ -174,15 +208,18 @@ def updateCheckin():
     # updates timout viarble for doucment  in mongodb using set__VARIBLEINDOUCMENT= str(NEWVARIBLE)
     checkin.update(set__timeOut=str(timeOut))
     print("timeout:", str(timeOut), timeOut)
-    counter = Counter.objects(storeId=storeId)
-    obj= counter.to_json()
-    new = json.loads(obj)
-    print("new: ", new, type(new))
-    new1= new[0]
-    number= new1["number"]
-    print("number: ", number)
-    updated= number-1
-    counter.update(set__number=str(updated))
+    store = Store.objects(id=storeId)
+    # obj= counter.to_json()
+    # new = json.loads(obj)
+    # print("new: ", new, type(new))
+    # new1= new[0]
+    # number= new1["number"]
+    # print("number: ", number)
+    c= statsd.decr('store.'+storeId)
+    print("c: ", c)
+    return
+    updated= statsd.decr('store.'+storeId)
+    store.update(set__capacity=(updated))
     return "ok"
 
 # @app.route("/api/updateCheck", methods=['POST'])
@@ -215,15 +252,15 @@ def capacityOfStore():
     # d['mynewkey'] = 'mynewvalue'
     # print(d)
     # # {'key': 'value', 'mynewkey': 'mynewvalue'}
-    all_counters = Counter.objects()
-    counters= all_counters.to_json()
+    # all_counters = Counter.objects()
+    # counters= all_counters.to_json()
     # Dict={}
     # for counter in Counter.objects:
         # Dict[]= counter.number
         # print(Dict)
     # print("DICT type: ", type(Dict))
     
-    return counters
+    return "ok"
 
 # ============================ 
 # DELETE ROUTE

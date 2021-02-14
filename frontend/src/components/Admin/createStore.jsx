@@ -16,12 +16,12 @@ class createStore extends Component {
                         <input type="text" name="storeName" className="form-control" id="storeName" aria-describedby="storeName" placeholder=" store/Location Name" ></input>
                     </div>
                     <div className="form-group">
-                        <label htmlFor="longitude">Longitude</label>
-                        <input type="number" step="0.0001" name="storeLng" className="form-control" id="storeLng" placeholder="Longitude of Store"></input>
-                    </div>
-                    <div className="form-group">
                         <label htmlFor="latitude">Latitude</label>
                         <input type="number" step="0.0001" name="storeLat" className="form-control" id="storeLat" placeholder="Latitude of Store"></input>
+                    </div>
+                    <div className="form-group">
+                        <label htmlFor="longitude">Longitude</label>
+                        <input type="number" step="0.0001" name="storeLng" className="form-control" id="storeLng" placeholder="Longitude of Store"></input>
                     </div>
                     <button type="submit" className="btn btn-primary">Create Store Location</button>
                 </form>

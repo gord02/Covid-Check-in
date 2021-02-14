@@ -83,8 +83,9 @@ class SimpleMap extends React.Component {
               style={mapStyles}
               initialCenter={{
                 lat: 43.716589,
-                lng: -79.723921,
+                lng: -79.723921 - 0.001,
               }} 
+              zoom={8}
             //   defaultCenter={this.props.center}
             //   defaultZoom={this.props.zoom}
               heatmapLibrary={true}          
@@ -132,7 +133,7 @@ class SimpleMap extends React.Component {
                         }}  
                     />
                 )}  
-                
+
                     <InfoWindow 
                         visible={this.state.areas[this.state.index].clicked} 
                         position={{lat:  (this.state.areas[this.state.index].lat + 0.002), lng: this.state.areas[this.state.index].lng}} 

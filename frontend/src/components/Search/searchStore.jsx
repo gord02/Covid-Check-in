@@ -40,6 +40,7 @@ class SearchStore extends Component {
             // console.log(response.data["0"])
             // ============================
             const allStores =response.data;
+            console.log("allstores: ", allStores);
             let len= allStores.length;
             let storeList= [];
 
@@ -193,7 +194,8 @@ class SearchStore extends Component {
                                     {/* <th scope="row">1</th> */}
                                     <td style={{ width: "323px"}}> {i.name}</td>
                                     <td style={{ width: "323px"}}>Pending</td>
-                                    <td style={{ width: "323px"}}>{List[x]}</td>
+                                    <td style={{ width: "323px"}}>{i.capacity===null ?0 : i.capacity}</td>
+                                    {/* <td style={{ width: "323px"}}>{List[x]}</td> */}
                                     <td>
                                         <Link in = {i} to="/checkin/checkin"><button style={{ marginLeft: "6px"}} onClick={ () => this.settingObject(i)}> Check Into</button>
                                         </Link>

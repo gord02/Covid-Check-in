@@ -32,16 +32,17 @@ class Store(Document):
     name = StringField(max_length=50)
     lng = FloatField(required=True, max_length=10)
     lat = FloatField(required=True, max_length=10)
+    capacity= IntField() 
     # _id= IntField(max_length=50)
     # total number of people checkedin incremetd by statsd
     # total = IntField(required=True)
 
-class Counter(Document):
-    number= IntField(required=True, max_length=10)
-    storeId= StringField(required=True, max_length=50)
+# class Counter(Document):
+#     number= IntField(required=True, max_length=10)
+#     storeId= StringField(required=True, max_length=50)
     
 
-def createNewStore(storeName, storeLng, storeLat):
+def createNewStore(storeName, storeLng, storeLat, capacity):
     # store = Store(name="Tim Hortons")
     # store.lat = 44.44
     # store.lng = 44.44
@@ -49,6 +50,7 @@ def createNewStore(storeName, storeLng, storeLat):
     store = Store(name=storeName)
     store.lng = storeLng
     store.lat = storeLat
+    store.capacity = capacity
     store.save()
 
 # print("hello")

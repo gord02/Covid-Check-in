@@ -15,6 +15,12 @@ class CheckIn extends Component {
         };
     }
     componentDidMount() {
+        // const { history } = this.props;
+
+        // FORCE REFRESH OF PAGE
+
+
+        // history.push('/');
         let thisKeyword = this;
         // axios get reuquest to backend to get checkin from mongdb based on current user
         app.auth().onAuthStateChanged(function(user) {
@@ -65,6 +71,7 @@ class CheckIn extends Component {
     }
 
     checkOut() {
+        const { history } = this.props;
         var thisKeyword = this;
         console.log("triggered?");
         // retirvers the id of the curently signed in user
@@ -92,6 +99,8 @@ class CheckIn extends Component {
             }
         }); 
         console.log("checked out");
+        // history.push("/");
+        // history.push("/checkin/checkin");
     }
     render() {
         return (
